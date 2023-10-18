@@ -1,0 +1,4 @@
+2023-10-15 18:33:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "CLIENT"
+Data conversion error converting "CLIENT"; SQL statement:
+select user0_.id as id1_1_, user0_.email as email2_1_, user0_.first_name as first_na3_1_, user0_.last_name as last_nam4_1_, user0_.password as password5_1_, user0_.username as username6_1_ from users user0_ inner join users_roles roles1_ on user0_.id=roles1_.user_id inner join roles role2_ on roles1_.roles_id=role2_.id where role2_.name='CLIENT' [22018-214]
