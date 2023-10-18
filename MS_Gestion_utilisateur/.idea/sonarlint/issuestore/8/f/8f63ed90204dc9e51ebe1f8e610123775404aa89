@@ -1,16 +1,12 @@
 
+E
+java:S5411<"(Use a primitive boolean expression here.(—‘×8Á–Â¨´1
+E
+java:S5411@"(Use a primitive boolean expression here.(ºÍç8Â–Â¨´1
+E
+java:S5411T"(Use a primitive boolean expression here.(Ñ¤¤à8Ã–Â¨´1
+E
+java:S5411X"(Use a primitive boolean expression here.(Šƒ8Ä–Â¨´1
 v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(…¥¾Ù8°¡²´1
 ]	java:S125"<This block of commented-out lines of code should be removed.(ù“›Óùÿÿÿÿ8µ¡²´1
 ]	java:S125 "<This block of commented-out lines of code should be removed.(»Ô¢üÿÿÿÿ8¼¡²´1
-B
-java:S1452:"&Remove usage of generic wildcard type.(†ç78À¡²´1
-B
-java:S1452R"&Remove usage of generic wildcard type.(ùØïP8Ã¡²´1
-H
-java:S1452j"&Remove usage of generic wildcard type.(ï¬ß¾üÿÿÿÿ8Ç¡²´1
-H
-java:S1452p"&Remove usage of generic wildcard type.(Ì§şÿÿÿÿ8È¡²´1
-C
-java:S1452|"&Remove usage of generic wildcard type.(Ì©¼Œ8Ê¡²´1
-D
-java:S1452‚"&Remove usage of generic wildcard type.(Ëş8Ë¡²´1
