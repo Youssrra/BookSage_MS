@@ -8,6 +8,8 @@ const reviewRoutes = require("./routes/reviewRoutes");
 
 require("dotenv").config();
 require("./Models/review");	
+require('./eureka-config');
+const eurekaHelper = require('./eureka-config');
 
 const app = express();
 mongoose.set("strictQuery", true);
@@ -46,5 +48,7 @@ const port = process.env.PORT || 5000; // Use the PORT environment variable if a
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+eurekaHelper.registerWithEureka('ms_review_nodejs', port);
 
 module.exports = app;
