@@ -1,0 +1,15 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs/
+
+# Debug
+debug.log
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
