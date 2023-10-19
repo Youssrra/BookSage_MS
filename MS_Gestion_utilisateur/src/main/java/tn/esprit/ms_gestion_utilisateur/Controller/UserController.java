@@ -1,35 +1,48 @@
 package tn.esprit.ms_gestion_utilisateur.Controller;
 
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import tn.esprit.ms_gestion_utilisateur.Dto.LoginDto;
 import tn.esprit.ms_gestion_utilisateur.Dto.SignUpDto;
 import tn.esprit.ms_gestion_utilisateur.Entity.ERole;
+import tn.esprit.ms_gestion_utilisateur.Entity.JwtResponse;
 import tn.esprit.ms_gestion_utilisateur.Entity.Role;
 import tn.esprit.ms_gestion_utilisateur.Entity.User;
 import tn.esprit.ms_gestion_utilisateur.Repository.RoleRepository;
 import tn.esprit.ms_gestion_utilisateur.Repository.UserRepository;
-//import tn.esprit.ms_gestion_utilisateur.SecurityConfig.JwtUtils;
-//import tn.esprit.ms_gestion_utilisateur.SecurityConfig.TokenService;
-//import tn.esprit.ms_gestion_utilisateur.Services.UserDetailsImpl;
+import tn.esprit.ms_gestion_utilisateur.SecurityConfig.JwtUtils;
+import tn.esprit.ms_gestion_utilisateur.SecurityConfig.TokenService;
+import tn.esprit.ms_gestion_utilisateur.Services.UserDetailsImpl;
 import tn.esprit.ms_gestion_utilisateur.Services.UserService;
 
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.*;
-
+import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/users")
 @CrossOrigin("*")
 public class UserController {
 
-    //@Autowired
-    // private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -38,6 +51,13 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    private TokenService tokenService;
+
+    private Map<String, Integer> sessionCountMap = new HashMap<>();
+
 
 
     @PostMapping("/login")
@@ -113,7 +133,7 @@ public class UserController {
         return  new ResponseEntity<>(userService.getUserById(userId),HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @DeleteMapping("/remove/{userId}")
     public ResponseEntity<String> removeUser(@PathVariable("userId") Integer userId) {
         userService.deleteUser(userId);
@@ -166,6 +186,73 @@ public class UserController {
         }
 
         return userRepository.save(existingUser);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginRequest, HttpSession session) {
+
+        System.out.println(loginRequest.getUsername());
+        Optional<User> userOptional = userRepository.findUserByUsername(loginRequest.getUsername());
+
+        System.out.println(userOptional);
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid email");
+        }
+
+        User u = userOptional.get();
+
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(u.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+        String ipAddress = getIpAddress();
+        System.out.println(ipAddress);
+        //String email = u.getEmail();
+        Integer numSessions = sessionCountMap.get(u.getUsername());
+        if (numSessions == null) {
+            numSessions = 1;
+        } else if (numSessions >= 2) {
+            // Maximum of three sessions reached
+            System.out.println("Maximum number of sessions reached for this user");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Maximum number of sessions reached for this user." );
+        } else {
+
+            numSessions++;
+        }
+
+        sessionCountMap.put(u.getEmail(), numSessions);
+        session.setAttribute("userEmail", u.getEmail());
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+        //String xForwardedForHeader = request.getHeader("X-FORWARDED-FOR");
+        //System.out.println(xForwardedForHeader);
+        Map<String, String> result = new HashMap<>();
+
+
+        System.out.println("user TO connect"+userDetails.getUsername()+
+                userDetails.getEmail());
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles));
+
+    }
+    private String getIpAddress() {
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            System.out.println("******"+inetAddress.getHostName());
+            return inetAddress.getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 
