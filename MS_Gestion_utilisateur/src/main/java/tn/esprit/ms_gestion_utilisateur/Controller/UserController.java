@@ -38,7 +38,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/users")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -73,7 +73,7 @@ public class UserController {
 
     }
 
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
         // checking for username exists in a database
@@ -127,6 +127,8 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+
     //@PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/getUserById/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable("userId") Integer userId) {
@@ -135,6 +137,7 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @DeleteMapping("/remove/{userId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> removeUser(@PathVariable("userId") Integer userId) {
         userService.deleteUser(userId);
         return new ResponseEntity<>("User deleted succesully", HttpStatus.OK);    }
@@ -153,6 +156,7 @@ public class UserController {
 
   //@PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
   @PutMapping("/update/{userId}")
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<User> updateUserInit(@PathVariable Integer userId, @RequestBody User userRequest) {
       try {
           User updatedUser = updateUser(userId, userRequest);
@@ -162,6 +166,7 @@ public class UserController {
       }
   }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     public User updateUser(Integer userId, User userRequest) {
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
 
@@ -188,7 +193,8 @@ public class UserController {
         return userRepository.save(existingUser);
     }
 
-    @PostMapping("/signin")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/signinn")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginRequest, HttpSession session) {
 
         System.out.println(loginRequest.getUsername());
@@ -210,10 +216,10 @@ public class UserController {
         String ipAddress = getIpAddress();
         System.out.println(ipAddress);
         //String email = u.getEmail();
-        Integer numSessions = sessionCountMap.get(u.getUsername());
+        Integer numSessions = sessionCountMap.get(u.getEmail());
         if (numSessions == null) {
             numSessions = 1;
-        } else if (numSessions >= 2) {
+        } else if (numSessions >= 10) {
             // Maximum of three sessions reached
             System.out.println("Maximum number of sessions reached for this user");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Maximum number of sessions reached for this user." );
@@ -232,6 +238,7 @@ public class UserController {
         //String xForwardedForHeader = request.getHeader("X-FORWARDED-FOR");
         //System.out.println(xForwardedForHeader);
         Map<String, String> result = new HashMap<>();
+
 
 
         System.out.println("user TO connect"+userDetails.getUsername()+
@@ -253,6 +260,24 @@ public class UserController {
             return null;
         }
 
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session,@RequestBody String username) {
+        Optional<User> user = userRepository.findUserByUsername(username);
+        if (user.isPresent()) {
+            User u = user.get();
+            Integer numSessions = sessionCountMap.get(u.getEmail());
+
+
+            if (numSessions != null && numSessions > 0) {
+                numSessions--;
+                sessionCountMap.put(u.getEmail(), numSessions);
+            }
+            session.invalidate(); // Clear the user's session
+        }
+        return ResponseEntity.ok("Logged out successfully.");
     }
 
 
