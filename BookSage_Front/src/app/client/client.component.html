@@ -1,0 +1,240 @@
+<div class="right_col" role="main">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>Clients List</h3>
+    </div>
+
+    <div class="title_right">
+      <div class="col-md-5 col-sm-5 form-group pull-right top_search">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="search" (input)="filterClients()">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Search!</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-header">
+                           
+                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+                              <i class="fa fa-plus"></i> Add
+                            </button>
+                          </div>
+                          <div class="card-body">
+                            <!-- Add Admin Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Client</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <app-createclient></app-createclient>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                  
+                  
+                            
+                            <!-- View Options -->
+                            <div class="btn-toolbar mb-3" role="toolbar">
+                              <div class="btn-group mr-2" role="group">
+                                <button class="btn btn-light" [ngClass]="{'active': !isGridView}" (click)="isGridView = false">
+                                  <i class="fa fa-list"></i>
+                                </button>
+                                <button class="btn btn-light" [ngClass]="{'active': isGridView}" (click)="isGridView = true">
+                                  <i class="fa fa-th"></i>
+                                </button>
+                              </div>
+                            </div>
+                            <p>Cette page affiche la liste des clients enregistrés,
+                              avec les informations de base et les possibilités de recherche et d'actions groupées.</p>
+                  
+                               
+  <!-- table view -->
+
+   
+
+  <div *ngIf="!isGridView">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" id="check-all" class="flat" hidden>
+            </th>
+            <th>Client ID</th>
+            <th>USERNAME</th>
+            <th>FIRSTNAME</th>
+            <th>LASTNAME</th>
+            <th>EMAIL</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr class="even pointer" *ngFor="let l of filteredClients | paginate: { itemsPerPage: 6, currentPage: p }">
+  
+            <td>
+              <input type="checkbox" class="flat" name="table_records">
+            </td>
+  
+            <td>{{ l.id }}</td>
+            <td>{{ l.username.length > 20 ? (l.username | slice:0:20) + '...' : l.username }}</td>
+            <td>{{ l.firstName.length > 20 ? (l.firstName | slice:0:20) + '...' : l.firstName }}</td>
+            <td>{{ l.lastName.length > 20 ? (l.lastName | slice:0:20) + '...' : l.lastName }}</td>
+            <td>{{ l.email.length > 20 ? (l.email | slice:0:20) + '...' : l.email }}</td>
+            <td class="text-center">
+              <a routerLink="/user/update/{{ l.id }}" class="btn btn-success btn-sm">
+                <i class="fa fa-info"></i> Detail
+              </a>
+              <a (click)="delete(l.id)" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Delete
+              </a>
+            </td>
+          </tr>
+          <tr *ngIf="message != 'DataLoaded'"
+          class="text-center no-data-found">
+
+          <td colspan="8" class="text-center no-data-found">
+             
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </td>
+
+        </tr>
+          <tr *ngIf="filteredClients.length === 0 && message == 'DataLoaded'">
+            <td colspan="8" class="text-center no-data-found">
+             Data Not Found
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+  
+
+                      
+                                  <!-- End table view -->
+
+  <!-- grid view -->
+
+       <div *ngIf="isGridView">
+  <div class="">
+    <div class="clearfix"></div>
+
+    <div class="row">
+      <div class="x_panel">
+        <div class="x_content">
+
+          <div class="clearfix"></div>
+          <div class="even pointer" *ngFor="let l of filteredClients | paginate: { itemsPerPage: 6, currentPage: p }">
+            <div class="col-md-4 col-sm-4 profile_details">
+              <div class="well profile_view">
+                <div class="col-sm-12">
+                  <h4 class="brief"><i>{{ l.username.length > 20 ? (l.username | slice:0:20) + '...' : l.username }}</i></h4>
+                  <div class="left col-md-7 col-sm-7">
+
+                    <p><strong>Email : </strong> {{ l.email.length > 20 ? (l.email | slice:0:20) + '...' : l.email }} </p>
+                    <ul class="list-unstyled">
+                      <li><i class="fa fa-name"></i> FirstName : {{ l.firstName.length > 20 ? (l.firstName | slice:0:20) + '...' : l.firstName }}</li>
+                      <li><i class=""></i> LastName :{{ l.lastName.length > 20 ? (l.lastName | slice:0:20) + '...' : l.lastName }}</li>
+                    </ul>
+                  </div>
+                  <div class="right col-md-5 col-sm-5 text-center">
+                    <img src="assets/images/img.jpg" alt="" class="img-circle img-fluid">
+                  </div>
+                </div>
+                <div class="profile-bottom text-center">
+                  <div class="col-sm-6 emphasis">
+                    <button type="button" class="btn btn-success btn-sm" routerLink="/user/update/{{ l.id }}">
+                      <i class="fa fa-info"></i> Detail
+                    </button>
+
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(l.id)">
+                      <i class="fa fa-trash"></i> Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="filteredClients.length === 0" class="text-center no-data-found">
+            Data Not Found
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<div class="text-center">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+</div>
+
+
+                                  
+                                  
+                                  
+
+  <!-- end grid view -->
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                           
+                          
+                       
+                    </div>
+                     
+                    
+                   
+                    
+                      
+                    <div class="alert alert-success d-flex align-items-center" *ngIf="successAlertVisible" role="alert">
+                        Client deleted successfully !
+                        <button type="button" class="close align-self-start ml-auto" (click)="closeSuccessAlert()" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      
+                      <div class="alert alert-danger d-flex align-items-center" *ngIf="errorAlertVisible" role="alert">
+                       Erreur cound not delete this client!
+                        <button type="button" class="close align-self-start ml-auto" (click)="closeErrorAlert()" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      
+
+       
+                           
+                   </div>
+                   
+                   
+                      
+            
+                   
+         
