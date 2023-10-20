@@ -1,12 +1,52 @@
 
 E
-java:S5411<"(Use a primitive boolean expression here.(—‘×8Á–Â¨´1
+java:S5411P"(Use a primitive boolean expression here.(—‘×8Œ™„×´1
 E
-java:S5411@"(Use a primitive boolean expression here.(ºÍç8Â–Â¨´1
+java:S5411T"(Use a primitive boolean expression here.(ºÍç8Œ™„×´1
 E
-java:S5411T"(Use a primitive boolean expression here.(Ñ¤¤à8Ã–Â¨´1
+java:S5411h"(Use a primitive boolean expression here.(Ñ¤¤à8Œ™„×´1
 E
-java:S5411X"(Use a primitive boolean expression here.(Šƒ8Ä–Â¨´1
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(…¥¾Ù8°¡²´1
-]	java:S125"<This block of commented-out lines of code should be removed.(ù“›Óùÿÿÿÿ8µ¡²´1
-]	java:S125 "<This block of commented-out lines of code should be removed.(»Ô¢üÿÿÿÿ8¼¡²´1
+java:S5411l"(Use a primitive boolean expression here.(Šƒ8Œ™„×´1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(…¥¾Ù8™„×´1
+T
+java:S3655v"7Call "Optional#isPresent()" before accessing the value.( ´æ¥8ºš„×´1
+Y
+java:S3655^"7Call "Optional#isPresent()" before accessing the value.(¿”æïÿÿÿÿÿ8ºš„×´1
+B
+java:S1452N"&Remove usage of generic wildcard type.(†ç78Äš„×´1
+B
+java:S1452f"&Remove usage of generic wildcard type.(ùØïP8Çš„×´1
+H
+java:S1452~"&Remove usage of generic wildcard type.(ï¬ß¾üÿÿÿÿ8Êš„×´1
+I
+java:S1452…"&Remove usage of generic wildcard type.(Ì§şÿÿÿÿ8Ëš„×´1
+D
+java:S1452’"&Remove usage of generic wildcard type.(Ì©¼Œ8Íš„×´1
+D
+java:S1452˜"&Remove usage of generic wildcard type.(Ëş8Íš„×´1
+]
+java:S4684Ÿ"@Replace this persistent entity with a simple POJO or DTO object.(Ìû…8Îš„×´1
+W
+java:S1854ï":Remove this useless assignment to local variable "result".(İæ68Õš„×´1
+I
+java:S1452Å"&Remove usage of generic wildcard type.(«úï§ıÿÿÿÿ8Õš„×´1
+G	java:S106Ç"+Replace this use of System.out by a logger.(¥ãš8Õš„×´1
+H	java:S106Ê"+Replace this use of System.out by a logger.(—Ä‰8Öš„×´1
+H	java:S106Ø"+Replace this use of System.out by a logger.(“ğ¸8×š„×´1
+Y	java:S125Ù"<This block of commented-out lines of code should be removed.(ÿ²ÏÄ8×š„×´1
+M	java:S106ß"+Replace this use of System.out by a logger.(çóİ‡úÿÿÿÿ8Øš„×´1
+Y	java:S125í"<This block of commented-out lines of code should be removed.(ÍŸÅ°8Úš„×´1
+H
+java:S1481ï"+Remove this unused "result" local variable.(İæ68Úš„×´1
+H	java:S106ó"+Replace this use of System.out by a logger.(¥Ğ8Ûš„×´1
+H	java:S106ÿ"+Replace this use of System.out by a logger.(ãê‰À8Üš„×´1
+
+java:S1128"bRemove this unused import 'com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException'.(‰ğ÷Æ8ßš„×´1
+s
+java:S1128"VRemove this unused import 'org.springframework.security.core.userdetails.UserDetails'.(ÊÁ¥8ßš„×´1
+z
+java:S1128"]Remove this unused import 'org.springframework.security.core.userdetails.UserDetailsService'.(¶…¥à8ßš„×´1
+^
+java:S1128""ARemove this unused import 'java.io.UnsupportedEncodingException'.(Ãµ…“8ßš„×´1
+R
+java:S10689"0Remove this unused "tokenService" private field.(ßª¯íùÿÿÿÿ8ßš„×´1

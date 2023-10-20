@@ -1,10 +1,8 @@
 
 o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(í×Í÷
-Z
-java:S1874"DRemove this use of "WebSecurityConfigurerAdapter"; it is deprecated.(Ë¶Ï“
-n
-java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡ž¸Îùÿÿÿÿ
-l
-java:S1128"QRemove this unused import 'org.springframework.context.annotation.Configuration'.(¬²Úäþÿÿÿÿ
-s
-java:S1128	"]Remove this unused import 'org.springframework.security.core.userdetails.UserDetailsService'.(¶…¥à
+
+java:S3305"]Inject this field value directly into "authenticationProvider", the only method that uses it.(ÙÍ•¯üÿÿÿÿ8¦»ôÂ´1
+}
+java:S1128"[Remove this unused import 'org.springframework.security.config.http.SessionCreationPolicy'.(‚ÌÎîüÿÿÿÿ8Ì±ÙÓ´1
+Ž
+java:S1128"qRemove this unused import 'org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter'.(÷ìïŠ8Ì±ÙÓ´1

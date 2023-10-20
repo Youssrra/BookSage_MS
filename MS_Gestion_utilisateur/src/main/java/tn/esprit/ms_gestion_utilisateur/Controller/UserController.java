@@ -128,7 +128,6 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-
     //@PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/getUserById/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable("userId") Integer userId) {
