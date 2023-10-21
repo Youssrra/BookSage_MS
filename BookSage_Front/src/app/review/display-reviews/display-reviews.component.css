@@ -1,0 +1,71 @@
+/* Styles for the modal container */
+.custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Styles for the modal content */
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 70%;
+    position: relative;
+  }
+  
+  /* Styles for the table inside the modal */
+  .modal-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .modal-table th, .modal-table td {
+    border: none;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top; /* Align text at the top of the cell */
+  }
+  
+  /* Optional: Add some styling to table rows for better readability */
+  .modal-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Close button styles */
+  .close-button {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #777;
+    transition: color 0.2s;
+  }
+  
+  .close-button:hover {
+    color: #333;
+  }
+  
+  /* Title styles */
+  .modal-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* Text content styles */
+  .modal-text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+  }
+  
