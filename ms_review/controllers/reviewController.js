@@ -50,4 +50,33 @@ exports.deleteReview = async (req, res) => {
   }
 };
 
+// Find reviews by userid
+exports.getReviewsByUserId = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const reviews = await Review.find({ userId: userId });
+    if (!reviews || reviews.length === 0) {
+      return res.status(404).json({ error: "Reviews not found for this userId" });
+    }
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Find reviews by bookId
+exports.getReviewsByBookId = async (req, res) => {
+  const bookId = req.params.bookId;
+  try {
+    const reviews = await Review.find({ bookId: bookId });
+    if (!reviews || reviews.length === 0) {
+      return res.status(404).json({ error: "Reviews not found for this bookId" });
+    }
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 

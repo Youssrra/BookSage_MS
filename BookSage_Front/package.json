@@ -21,11 +21,13 @@
     "@fortawesome/angular-fontawesome": "^0.13.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@syncfusion/ej2-angular-dropdowns": "^23.1.41",
     "jquery": "^3.7.0",
     "mdb-ui-kit": "^6.4.0",
     "ngx-cookie-service": "^16.0.0",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
+    "select2": "^4.1.0-rc.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
