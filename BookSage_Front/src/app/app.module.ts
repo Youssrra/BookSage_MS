@@ -38,6 +38,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UpdateClientComponent } from './update-client/update-client.component';
 import { AlertComponent } from './shared/alert/alert.component';
 import { MultiStepFormComponent } from './multi-step-form/multi-step-form.component';
+import { DisplayReviewsComponent } from './review/display-reviews/display-reviews.component';
+import { AddReviewComponent } from './review/add-review/add-review.component';
+import { UpdateReviewComponent } from './review/update-review/update-review.component';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import { DisplayMyReviewsComponent } from './review/display-my-reviews/display-my-reviews.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +73,10 @@ import { MultiStepFormComponent } from './multi-step-form/multi-step-form.compon
     AlertComponent,
     DetailClientComponent,
     MultiStepFormComponent,
+    DisplayReviewsComponent,
+    AddReviewComponent,
+    UpdateReviewComponent,
+    DisplayMyReviewsComponent,
    
   ],
   imports: [
@@ -79,7 +88,7 @@ import { MultiStepFormComponent } from './multi-step-form/multi-step-form.compon
     FontAwesomeModule,
     NgxPaginationModule,
     BrowserAnimationsModule,
-   
+    DropDownListModule,
  
   ],
   providers: [AuthGuard, 

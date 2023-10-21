@@ -1,0 +1,42 @@
+
+
+<form id="form" data-parsley-validate class="form-horizontal form-label-left" #form="ngForm">
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="comment">Comment <span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6">
+          <textarea [(ngModel)]="review.comment" id="comment" name="comment" #comment="ngModel" required minlength="5" class="form-control" (blur)="comment.control.markAsTouched()" rows="4"></textarea>
+          <div *ngIf="comment.invalid && (comment.dirty || comment.touched)">
+            <div *ngIf="comment.errors?.['required']" class="error-message">Review comment cannot be empty.</div>
+            <div *ngIf="comment.errors?.['minlength']" class="error-message">Your review must be at least 10 characters long.</div>
+          </div>
+        </div>
+      </div>
+      
+
+    <div class="ln_solid"></div>
+  
+    <div class="item form-group">
+      <div class="col-md-6 col-sm-6 offset-md-3">
+        <button class="btn btn-primary" type="reset">Reset</button>
+        <button type="submit" (click)="CreateReview()" class="btn btn-success" [disabled]="!form?.valid || !form?.dirty">
+          Create</button>
+      </div>
+    </div>
+    
+    <div class="alert alert-success d-flex align-items-center" *ngIf="successAlertVisible" role="alert">
+      Client account successfully added!
+      <button type="button" class="close align-self-start ml-auto" (click)="closeSuccessAlert()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+    <div class="alert alert-danger d-flex align-items-center" *ngIf="errorAlertVisible" role="alert">
+      An error occurred while creating the account!
+      <button type="button" class="close align-self-start ml-auto" (click)="closeErrorAlert()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+  </form>
+  

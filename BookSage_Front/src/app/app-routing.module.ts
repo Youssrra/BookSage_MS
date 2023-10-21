@@ -19,8 +19,10 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { NewpasswordComponent } from './newpassword/newpassword.component';
 import { DetailClientComponent } from './detail-client/detail-client.component';
 import { UpdateClientComponent } from './update-client/update-client.component';
-
-
+import { DisplayReviewsComponent } from './review/display-reviews/display-reviews.component';
+import { AddReviewComponent } from './review/add-review/add-review.component';
+import { UpdateReviewComponent } from './review/update-review/update-review.component';
+import { DisplayMyReviewsComponent } from './review/display-my-reviews/display-my-reviews.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -37,6 +39,12 @@ const routes: Routes = [
   { path: 'forbidden', component: ErrorPageComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'user/update/:id', component: UpdateClientComponent },
+  { path: 'reviews', component: DisplayReviewsComponent },
+  { path: 'reviews/add', component: AddReviewComponent },
+  { path: 'reviews/update/:id', component: UpdateReviewComponent },
+  { path: 'myreviews', component: DisplayMyReviewsComponent },
+
+
 
   
 ];

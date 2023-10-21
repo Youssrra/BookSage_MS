@@ -14,4 +14,10 @@ router.put("/reviews/:id", reviewController.updateReview);
 // Delete a review by ID
 router.delete("/reviews/:id", reviewController.deleteReview);
 
+// Find reviews by userId
+router.get("/reviews/user/:userId", reviewController.getReviewsByUserId);
+
+// Find reviews by bookId
+router.get("/reviews/book/:bookId", reviewController.getReviewsByBookId);
+
 module.exports = router;
