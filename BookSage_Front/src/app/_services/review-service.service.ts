@@ -27,8 +27,18 @@ export class ReviewServiceService {
     return this.httpclient.get(`http://localhost:5000/reviews/user/${id}`,{responseType:"json"});
   }
 
+
+  public listeAllBookReviews(id:any):Observable<any>{
+    return this.httpclient.get(`http://localhost:5000/reviews/book/${id}`,{responseType:"json"});
+  }
+
+  public addReview(review:any):Observable<any>{
+    return this.httpclient.post("http://localhost:5000/reviews",review,{responseType:"text"})
+
+}
+  
   //
-  //
+  //  
 
 
 

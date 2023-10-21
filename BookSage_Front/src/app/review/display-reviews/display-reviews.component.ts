@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { UserService } from '../../_services/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ReviewServiceService } from 'src/app/_services/review-service.service';
 
@@ -18,12 +18,21 @@ export class DisplayReviewsComponent {
   successAlertVisible = false;
   errorAlertVisible = false;
   message: string = "WAITING FOR DATA ";
+  id !: any ;
+  initialData: any; 
 
+    constructor(private auth: UserService, private router: Router, private cookieService: CookieService, 
+      private reviewServiec: ReviewServiceService,private route: ActivatedRoute)
+     {
 
-    constructor(private renderer: Renderer2,
-      private elementRef: ElementRef,private auth: UserService, private router: Router, private cookieService: CookieService, private reviewServiec: ReviewServiceService) {
+        this.route.params.subscribe(params => {
+          this.id = params['id'];
+          // Use the 'id' parameter in your component logic
+          console.log("hello"+this.id);
+        });
 
-      this.reviewServiec.listeallReviews().subscribe((data: any) => {
+        
+      this.reviewServiec.listeAllBookReviews(this.id).subscribe((data: any) => {
         data.forEach((element: any) => {
           this.auth.DetailsUser(element.userId).subscribe((user: any) => {
             element.userId = user; // Attach user data to the review object.
@@ -39,25 +48,6 @@ export class DisplayReviewsComponent {
     
 
     }
-
-    
-  ngAfterViewInit() {
-    $(document).ready(() => {
-      this.renderer.listen(this.elementRef.nativeElement, 'click', (event: any) => {
-        // Check if the clicked element has a specific class that represents the sidebar toggle button
-        if ($(event.target).hasClass('sidebar-toggle-button')) {
-          // Toggle the sidebar by adding/removing a CSS class
-          $('.sidebar').toggleClass('sidebar-hidden');
-        }
-      });
-  
-      $('.nav.child_menu li.active').parents('ul').slideDown();
-    });
-  
-//    console.log("role !" + this.role);
-  }
-
-
 
     filterReviews() {
       this.filteredReviews = this.liste.filter((client) => {
@@ -108,7 +98,40 @@ export class DisplayReviewsComponent {
     }
   
   
-  
+    openCustomModal(review:any) {
+      const modal = document.getElementById("customModal");
+      const modalContent = document.getElementById("modalContent");
+    
+      if (modalContent) { // Check if modalContent is not null
+        // Populate the modal content with review details
+        modalContent.innerHTML = `
+          <p class="modal-text"><strong class="modal-title">REVIEW ID:</strong> ${review._id}</p>
+          <p class="modal-text"><strong class="modal-title">USER:</strong> ${review.userId.username}</p>
+          <p class="modal-text"><strong class="modal-title">COMMENT:</strong> ${review.comment}</p>
+          <p class="modal-text"><strong class="modal-title">RATE:</strong> ${review.rating}</p>
+        `;
+      }
+      
+    
+      if (modal) {
+        modal.style.display = "block";
+      }
+    
+      // Close the modal when the close button is clicked
+      const closeModalButton = document.getElementById("closeModal");
+      if (closeModalButton) { // Check if closeModalButton is not null
+        closeModalButton.onclick = function() {
+          if (modal) {
+            modal.style.display = "none";
+          }
+        };
+      }
+    }
+
+    openAddModalWithInitialData() {
+   
+       this.initialData = this.id ;
+    }  
 
 
 }

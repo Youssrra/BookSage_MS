@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'forbidden', component: ErrorPageComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'user/update/:id', component: UpdateClientComponent },
-  { path: 'reviews', component: DisplayReviewsComponent },
+  { path: 'books/reviews/:id', component: DisplayReviewsComponent },
   { path: 'reviews/add', component: AddReviewComponent },
   { path: 'reviews/update/:id', component: UpdateReviewComponent },
   { path: 'myreviews', component: DisplayMyReviewsComponent },

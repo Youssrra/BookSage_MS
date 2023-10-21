@@ -12,6 +12,26 @@
           </div>
         </div>
       </div>
+
+      <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="comment">Rating <span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6">
+          <span class="star-rating">
+            <label for="rate-1" style="--i:1"><i class="fa-solid fa-star"></i></label>
+            <input type="radio" name="rating" id="rate-1" value="1" [(ngModel)]="review.rating">
+            <label for="rate-2" style="--i:2"><i class="fa-solid fa-star"></i></label>
+            <input type="radio" name="rating" id="rate-2" value="2" [(ngModel)]="review.rating">
+            <label for="rate-3" style="--i:3"><i class="fa-solid fa-star"></i></label>
+            <input type="radio" name="rating" id="rate-3" value="3" [(ngModel)]="review.rating">
+            <label for="rate-4" style="--i:4"><i class="fa-solid fa-star"></i></label>
+            <input type="radio" name="rating" id="rate-4" value="4" [(ngModel)]="review.rating">
+            <label for="rate-5" style="--i:5"><i class="fa-solid fa-star"></i></label>
+            <input type="radio" name="rating" id="rate-5" value="5" [(ngModel)]="review.rating">
+          </span>
+        </div>
+      </div>
+      
+      
       
 
     <div class="ln_solid"></div>
