@@ -113,12 +113,12 @@ pertoire du projet.
 ## Besoin d'Aide ?
 Pour toute question, préoccupation ou support technique, veuillez contacter les responsables du projet :
 
-- [Adresse e-mail de contact 1]
-- [Adresse e-mail de contact 2]
+- yousra.abid@esprit.tn
+- nermin.fattouch@esprit.tn
+- houssemeddine.gadhgadhi@esprit.tn
+- lassoued.mohamedaziz@esprit.tn
 
 Nous sommes là pour vous aider à contribuer et à utiliser BookSage !
 
 **Bon développement !**
 ```
-
-N'hésitez pas à personnaliser davantage la documentation en remplaçant `[mentionner la licence ici]`, `[Adresse e-mail de contact 1]` et `[Adresse e-mail de contact 2]` par les informations appropriées pour votre projet.
