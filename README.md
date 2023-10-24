@@ -105,9 +105,6 @@ Le projet BookSage accueille les contributions de la communauté. Si vous souhai
 
 5. Une fois que la contribution est approuvée, elle sera fusionnée dans le projet principal.
 
-## Licence
-Le projet BookSage est sous licence [mentionner la licence ici]. Pour plus de détails sur la licence, consultez le fichier LICENCE inclus dans le ré
-
 pertoire du projet.
 
 ## Besoin d'Aide ?
