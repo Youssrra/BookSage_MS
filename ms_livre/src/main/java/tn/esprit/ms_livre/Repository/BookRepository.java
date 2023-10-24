@@ -24,6 +24,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     void updateBookTitleById(
             @Param("isbn") long isbn, @Param("title") String title);
 
+    Integer countAllByCategory_Id(Long id) ;
+
 
 
 }

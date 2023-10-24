@@ -9,6 +9,7 @@ import tn.esprit.ms_livre.Services.CategoryService;
 
 import java.util.List;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {

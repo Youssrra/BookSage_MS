@@ -29,8 +29,8 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public void updateBookTitleById(Long isbn, String title) {
-        bookRepository.updateBookTitleById(isbn, title);
+    public void updateBookById(Book book) {
+        bookRepository.save(book);
     }
 
     public void deleteBookById(Long isbn) {
@@ -40,6 +40,12 @@ public class BookService {
 
     public Book getById(Long id) {
         return bookRepository.findById(id).orElse(null);
+    }
+
+
+    public Integer CountBooksByCategory(Long idCategory)
+    {
+        return bookRepository.countAllByCategory_Id(idCategory) ;
     }
 
 

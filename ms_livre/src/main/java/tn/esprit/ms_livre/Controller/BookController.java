@@ -9,6 +9,7 @@ import tn.esprit.ms_livre.Services.BookService;
 
 import java.util.List;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -28,10 +29,10 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateBookTitle(@PathVariable Long id, @RequestParam String title) {
-        bookService.updateBookTitleById(id, title);
-        return ResponseEntity.ok("Book title updated successfully");
+    @PutMapping("/update")
+    public ResponseEntity<String> updateBook(@RequestBody Book book) {
+        bookService.updateBookById(book);
+        return ResponseEntity.ok("Book updated successfully");
     }
 
     @DeleteMapping("/delete/{id}")
@@ -49,4 +50,13 @@ public class BookController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @GetMapping("/coutBooksCategory/{id}")
+    public ResponseEntity<Integer> CountBooksByCategory(@PathVariable Long id)
+    {
+        return ResponseEntity.ok(bookService.CountBooksByCategory(id));
+
+    }
+
 }

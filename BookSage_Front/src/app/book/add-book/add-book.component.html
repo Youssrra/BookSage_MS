@@ -1,0 +1,103 @@
+  <form id="form" data-parsley-validate class="form-horizontal form-label-left" #form="ngForm">
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="Isbn">ISBN <span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6">
+          <input type="number" [(ngModel)]="book.isbn" id="Isbn" name="isbn" #isbn="ngModel" required minlength="13" class="form-control"
+          (blur)="isbn.control.markAsTouched()">
+          <div *ngIf="isbn.invalid && (isbn.dirty || isbn.touched)">
+            <div *ngIf="isbn.errors?.['required']" class="error-message">Book ISBN cannot be empty.</div>
+            <div *ngIf="isbn.errors?.['minlength']" class="error-message">Book ISBN must be 13 digit long.</div>
+          </div>
+        </div>
+      </div>
+
+    <div class="item form-group">
+      <label class="col-form-label col-md-3 col-sm-3 label-align" for="Title">Title <span class="required">*</span></label>
+      <div class="col-md-6 col-sm-6">
+        <input type="text" [(ngModel)]="book.title" id="Title" name="title" #title="ngModel" required minlength="5" class="form-control"
+        (blur)="title.control.markAsTouched()">
+        <div *ngIf="title.invalid && (title.dirty || title.touched)">
+          <div *ngIf="title.errors?.['required']" class="error-message">Book title name cannot be empty.</div>
+          <div *ngIf="title.errors?.['minlength']" class="error-message">Book title name must be at least 4 characters long.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="Author">Author <span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6">
+          <input type="text" [(ngModel)]="book.author" id="Author" name="author" #author="ngModel" required class="form-control"
+          (blur)="author.control.markAsTouched()">
+          <div *ngIf="author.invalid && (author.dirty || author.touched)">
+            <div *ngIf="author.errors?.['required']" class="error-message">Book author name cannot be empty.</div>
+          </div>
+        </div>
+      </div>
+
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="Price">Price <span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6">
+          <input type="number" [(ngModel)]="book.price" id="Price" name="price" #price="ngModel" required class="form-control"
+          (blur)="price.control.markAsTouched()">
+          <div *ngIf="price.invalid && (price.dirty || price.touched)">
+            <div *ngIf="price.errors?.['required']" class="error-message">Book price cannot be empty.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item form-group">
+        <label for="selectAvaibility" class="col-form-label col-md-3 col-sm-3 label-align">Avaibility<span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6">
+          <select [(ngModel)]="selectAvaibility" name="selectAvaibility" id="selectAvaibility" class="form-control" required>
+            <option value="" disabled selected>{{ 'Select an option' }}</option>
+            <option [value]="true">Avaible</option>
+            <option [value]="false">Unavaible</option>
+          </select>
+        </div>
+      </div>
+
+
+    <div class="item form-group">
+        <label for="selectCategory" class="col-form-label col-md-3 col-sm-3 label-align">Category<span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6">
+          <select [(ngModel)]="selectCategory" name="selectCategory" id="selectCategory" class="form-control" required>
+            <option value="" disabled selected>{{ 'Select a category' }}</option>
+            <option *ngFor="let l of liste;" [value]="l.id">{{ l.nom }}</option>
+          </select>
+        </div>
+      </div>
+
+
+
+  
+  
+   
+    <div class="ln_solid"></div>
+  
+    <div class="item form-group">
+      <div class="col-md-6 col-sm-6 offset-md-3">
+        <button class="btn btn-primary" type="reset">Reset</button>
+        <button type="submit" (click)="CreateBook()" class="btn btn-success" [disabled]="!form?.valid || !form?.dirty">
+          Create</button>
+      </div>
+    </div>
+    
+    <div class="alert alert-success d-flex align-items-center" *ngIf="successAlertVisible" role="alert">
+      Book successfully added!
+      <button type="button" class="close align-self-start ml-auto" (click)="closeSuccessAlert()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+    <div class="alert alert-danger d-flex align-items-center" *ngIf="errorAlertVisible" role="alert">
+      An error occurred while adding this book!
+      <button type="button" class="close align-self-start ml-auto" (click)="closeErrorAlert()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+  </form>
+  
