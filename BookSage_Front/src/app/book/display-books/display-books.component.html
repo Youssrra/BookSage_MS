@@ -1,0 +1,164 @@
+<div class="right_col" role="main">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Book List</h3>
+      </div>
+  
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="search" (input)="filterBooks()">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Search!</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+                      <div class="clearfix"></div>
+  
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card">
+                            <div class="card-header">
+                             
+                              <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+                                <i class="fa fa-plus"></i> Add
+                              </button>
+                            </div>
+                            <div class="card-body">
+                              <!-- Add Admin Modal -->
+                              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Add New Book</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <app-add-book></app-add-book>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                    
+                    
+                              
+                           
+    <!-- table view -->
+  
+     
+  
+    <div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" id="check-all" class="flat" hidden>
+              </th>
+              <th>ISBN</th>
+              <th>TITLE</th>
+              <th>AUTHOR</th>
+              <th>PRICE</th>
+              <th>CATEGORY</th>
+              <th>AVAIBILITY</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+    
+          <tbody>
+            <tr class="even pointer" *ngFor="let l of filteredBooks | paginate: { itemsPerPage: 6, currentPage: p }">
+    
+              <td>
+                <input type="checkbox" class="flat" name="table_records">
+              </td>
+    
+              <td>{{ l.isbn.length > 20 ? (l.isbn | slice:0:20) + '...' : l.isbn }}</td>
+              <td>{{ l.title.length > 20 ? (l.title | slice:0:20) + '...' : l.title }}</td>
+              <td>{{ l.author.length > 20 ? (l.author | slice:0:20) + '...' : l.author }}</td>
+              <td>{{ l.price.length > 20 ? (l.price | slice:0:20) + '...' : l.price }}</td>
+              <td>{{ l.category.nom.length > 20 ? (l.category.nom | slice:0:20) + '...' : l.category.nom }}</td>              <td>
+                <span *ngIf="l.avaibility==true" class="badge badge-success"> Avaible  <i class="fa fa-check"></i></span>
+                <span *ngIf="l.avaibility==false" class="badge badge-danger"> Unavaible  <i class="fa fa-check"></i></span>
+              </td>
+              <td class="text-center">
+                <a routerLink="/books/update/{{ l.id }}" class="btn btn-success btn-sm">
+                  <i class="fa fa-info"></i> Detail
+                </a>
+                <a (click)="delete(l.id)" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash"></i> Delete
+                </a>
+              </td>
+            </tr>
+            <tr *ngIf="message != 'DataLoaded'"
+            class="text-center no-data-found">
+  
+            <td colspan="8" class="text-center no-data-found">
+               
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </td>
+  
+          </tr>
+            <tr *ngIf="filteredBooks.length === 0 && message == 'DataLoaded'">
+              <td colspan="8" class="text-center no-data-found">
+               Data Not Found
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+    
+  
+                        
+                                    <!-- End table view -->
+  
+  
+  
+                                  </div>
+                              </div>
+                          </div>
+                      
+                             
+                            
+                         
+                      </div>
+                       
+                      
+                     
+                      
+                        
+                      <div class="alert alert-success d-flex align-items-center" *ngIf="successAlertVisible" role="alert">
+                          Book deleted successfully !
+                          <button type="button" class="close align-self-start ml-auto" (click)="closeSuccessAlert()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        
+                        <div class="alert alert-danger d-flex align-items-center" *ngIf="errorAlertVisible" role="alert">
+                         Book cound not delete this client!
+                          <button type="button" class="close align-self-start ml-auto" (click)="closeErrorAlert()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        
+  
+         
+                             
+                     </div>
+                     
+                     
+                        
+              
+                     
+           
