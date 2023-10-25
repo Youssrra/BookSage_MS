@@ -18,5 +18,15 @@ services:
     depends_on:
       - eureka-server
 
+  ms-review:
+    image: ms-review-image
+    container_name: ms-review-container
+    ports:
+      - "5000:5000"
+    networks:
+      - my-network
+    depends_on:
+      - eureka-server
+
 networks:
   my-network:
