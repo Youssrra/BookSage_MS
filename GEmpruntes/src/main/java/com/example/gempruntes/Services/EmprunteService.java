@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,6 +22,7 @@ EmpruntRepository empruntRepository;
 
     @Override
     public Emprunte creeEmprunte(Emprunte emprunte) {
+        emprunte.setDate(new Date());
         empruntRepository.save(emprunte);
         return emprunte;
     }
@@ -34,10 +36,12 @@ EmpruntRepository empruntRepository;
     @Override
     public Emprunte modifierEmprunte(long id, Emprunte emprunte) {
         Emprunte e = empruntRepository.findById(id).get();
-e.setDate(emprunte.getDate());
-e.setDescription(emprunte.getDescription());
-empruntRepository.save(e);
-
+        e.setDate(new Date());
+        e.setDescription(emprunte.getDescription());
+        e.setIdUser(emprunte.getIdUser());
+        e.setIdLivre(emprunte.getIdLivre());
+        e.setRendue(emprunte.getRendue());
+        empruntRepository.save(e);
         return e;
     }
 

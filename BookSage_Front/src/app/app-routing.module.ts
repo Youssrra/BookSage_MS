@@ -28,6 +28,10 @@ import { DisplayCategoryComponent } from './category/display-category/display-ca
 import { AddBookComponent } from './book/add-book/add-book.component';
 import { AddCategoryComponent } from './category/add-category/add-category.component';
 import { UpdateBookComponent } from './book/update-book/update-book.component';
+import { DisplayEmpruntComponent } from './emprunt/display-emprunt/display-emprunt.component';
+import { AddEmpruntComponent } from './emprunt/add-emprunt/add-emprunt.component';
+import { UpdateEmpruntComponent } from './emprunt/update-emprunt/update-emprunt.component';
+
 const routes: Routes = [
   //{ path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginCompComponent },
@@ -52,6 +56,9 @@ const routes: Routes = [
   { path: 'books/add', component: AddBookComponent },
   { path: 'books/category/add', component: AddCategoryComponent },
   { path: 'books/update/:id', component: UpdateBookComponent },
+  { path: 'lons', component: DisplayEmpruntComponent },
+  { path: 'lons/add', component: AddEmpruntComponent },
+  { path: 'lons/update/:id', component: UpdateEmpruntComponent },
 
 
 

@@ -1,0 +1,104 @@
+<div class="right_col" role="main">
+    <div class="">
+  
+  
+  
+      <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2> Loan {{ loan.id }}  </h2>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+
+
+
+
+
+<form id="form" data-parsley-validate class="form-horizontal form-label-left" #form="ngForm">
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="Description">Description <span class="required">*</span></label>
+        <div class="col-md-6 col-sm-6">
+          <input type="text" [(ngModel)]="loan.description" id="Description" name="description" #description="ngModel" required minlength="5" class="form-control"
+          (blur)="description.control.markAsTouched()">
+          <div *ngIf="description.invalid && (description.dirty || description.touched)">
+            <div *ngIf="description.errors?.['required']" class="error-message">description cannot be empty.</div>
+            <div *ngIf="description.errors?.['minlength']" class="error-message">description be at least 5 characters long.</div>
+          </div>
+        </div>
+      </div>
+  
+  
+        <div class="item form-group">
+          <label for="selectAvaibility" class="col-form-label col-md-3 col-sm-3 label-align">Retuned<span class="required">*</span></label>
+          <div class="col-md-6 col-sm-6">
+            <select [(ngModel)]="loan.rendue" name="selectAvaibility" id="selectAvaibility" class="form-control" required>
+              <option value="" disabled selected>{{ 'Select an option' }}</option>
+              <option [value]="true">YES</option>
+              <option [value]="false">NO</option>
+            </select>
+          </div>
+        </div>
+  
+      <div class="item form-group">
+          <label for="selectBook" class="col-form-label col-md-3 col-sm-3 label-align">Book<span class="required">*</span></label>
+          <div class="col-md-6 col-sm-6">
+            <select [(ngModel)]="loan.idLivre" name="selectBook" id="selectBook" class="form-control" required>
+              <option value="" disabled selected>{{ 'Select a book' }}</option>
+              <option *ngFor="let b of listbook;" [value]="b.id">{{  b.id }} : {{ b.title }}</option>
+            </select>
+          </div>
+        </div>
+  
+        
+      <div class="item form-group">
+          <label for="selectUser" class="col-form-label col-md-3 col-sm-3 label-align">CLIENT<span class="required">*</span></label>
+          <div class="col-md-6 col-sm-6">
+            <select [(ngModel)]="loan.idUser" name="selectUser" id="selectUser" class="form-control" required>
+              <option value="" disabled selected>{{ 'Select a client' }}</option>
+              <option *ngFor="let c of listclient;" [value]="c.id">{{  c.id }} : {{ c.username }}</option>
+            </select>
+          </div>
+        </div>
+
+
+
+  
+  
+   
+    <div class="ln_solid"></div>
+  
+    <div class="item form-group">
+      <div class="col-md-6 col-sm-6 offset-md-3">
+        <button type="submit" (click)="UpdateLoan()" class="btn btn-success" [disabled]="!form?.valid || !form?.dirty">
+          Update</button>
+      </div>
+    </div>
+    
+    <div class="alert alert-success d-flex align-items-center" *ngIf="successAlertVisible" role="alert">
+      Loan successfully updated!
+      <button type="button" class="close align-self-start ml-auto" (click)="closeSuccessAlert()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+    <div class="alert alert-danger d-flex align-items-center" *ngIf="errorAlertVisible" role="alert">
+      An error occurred while updating this loan!
+      <button type="button" class="close align-self-start ml-auto" (click)="closeErrorAlert()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+  </form>
+  
+
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+ 

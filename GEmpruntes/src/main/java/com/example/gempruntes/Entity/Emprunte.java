@@ -19,10 +19,11 @@ public class Emprunte implements Serializable {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id ;
     long idLivre;
-String description;
-
-@Temporal(TemporalType.DATE)
+    int idUser ;
+    String description;
+    @Temporal(TemporalType.DATE)
     Date date;
+    Boolean rendue ;
 
 
 }
