@@ -43,6 +43,11 @@ import { AddReviewComponent } from './review/add-review/add-review.component';
 import { UpdateReviewComponent } from './review/update-review/update-review.component';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DisplayMyReviewsComponent } from './review/display-my-reviews/display-my-reviews.component';
+import { DisplayBooksComponent } from './book/display-books/display-books.component';
+import { AddBookComponent } from './book/add-book/add-book.component';
+import { UpdateBookComponent } from './book/update-book/update-book.component';
+import { DisplayCategoryComponent } from './category/display-category/display-category.component';
+import { AddCategoryComponent } from './category/add-category/add-category.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +82,11 @@ import { DisplayMyReviewsComponent } from './review/display-my-reviews/display-m
     AddReviewComponent,
     UpdateReviewComponent,
     DisplayMyReviewsComponent,
+    DisplayBooksComponent,
+    AddBookComponent,
+    UpdateBookComponent,
+    DisplayCategoryComponent,
+    AddCategoryComponent,
    
   ],
   imports: [

@@ -15,14 +15,25 @@ public class Book {
     private String title;
 
     @Column(name = "author", nullable = false)
-    private String author;
+    private Long author;
 
     @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "avaibility", nullable = false)
+    private Boolean avaibility ;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public Boolean getAvaibility() {
+        return avaibility;
+    }
+
+    public void setAvaibility(Boolean avaibility) {
+        this.avaibility = avaibility;
+    }
 
     public Category getCategory() {
         return category;
@@ -59,11 +70,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Long getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Long author) {
         this.author = author;
     }
 

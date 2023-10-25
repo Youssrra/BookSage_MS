@@ -1,0 +1,43 @@
+<form id="form" data-parsley-validate class="form-horizontal form-label-left" #form="ngForm">
+
+    <div class="item form-group">
+      <label class="col-form-label col-md-3 col-sm-3 label-align" for="Nom">Name <span class="required">*</span></label>
+      <div class="col-md-6 col-sm-6">
+        <input type="text" [(ngModel)]="category.nom" id="Nom" name="nom" #nom="ngModel" required minlength="5" class="form-control"
+        (blur)="nom.control.markAsTouched()">
+        <div *ngIf="nom.invalid && (nom.dirty || nom.touched)">
+          <div *ngIf="nom.errors?.['required']" class="error-message">Category name cannot be empty.</div>
+          <div *ngIf="nom.errors?.['minlength']" class="error-message">Category name must be at least 3 characters long.</div>
+        </div>
+      </div>
+    </div>
+
+  
+  
+   
+    <div class="ln_solid"></div>
+  
+    <div class="item form-group">
+      <div class="col-md-6 col-sm-6 offset-md-3">
+        <button class="btn btn-primary" type="reset">Reset</button>
+        <button type="submit" (click)="CreateCategory()" class="btn btn-success" [disabled]="!form?.valid || !form?.dirty">
+          Create</button>
+      </div>
+    </div>
+    
+    <div class="alert alert-success d-flex align-items-center" *ngIf="successAlertVisible" role="alert">
+      Category account successfully added!
+      <button type="button" class="close align-self-start ml-auto" (click)="closeSuccessAlert()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+    <div class="alert alert-danger d-flex align-items-center" *ngIf="errorAlertVisible" role="alert">
+      An error occurred while adding this category!
+      <button type="button" class="close align-self-start ml-auto" (click)="closeErrorAlert()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+  </form>
+  

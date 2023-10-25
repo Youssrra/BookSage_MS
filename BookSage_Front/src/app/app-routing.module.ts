@@ -23,7 +23,11 @@ import { DisplayReviewsComponent } from './review/display-reviews/display-review
 import { AddReviewComponent } from './review/add-review/add-review.component';
 import { UpdateReviewComponent } from './review/update-review/update-review.component';
 import { DisplayMyReviewsComponent } from './review/display-my-reviews/display-my-reviews.component';
-
+import { DisplayBooksComponent } from './book/display-books/display-books.component';
+import { DisplayCategoryComponent } from './category/display-category/display-category.component';
+import { AddBookComponent } from './book/add-book/add-book.component';
+import { AddCategoryComponent } from './category/add-category/add-category.component';
+import { UpdateBookComponent } from './book/update-book/update-book.component';
 const routes: Routes = [
   //{ path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginCompComponent },
@@ -43,6 +47,13 @@ const routes: Routes = [
   { path: 'reviews/add', component: AddReviewComponent },
   { path: 'reviews/update/:id', component: UpdateReviewComponent },
   { path: 'myreviews', component: DisplayMyReviewsComponent },
+  { path: 'books', component: DisplayBooksComponent },
+  { path: 'books/category', component: DisplayCategoryComponent },
+  { path: 'books/add', component: AddBookComponent },
+  { path: 'books/category/add', component: AddCategoryComponent },
+  { path: 'books/update/:id', component: UpdateBookComponent },
+
+
 
 
 
