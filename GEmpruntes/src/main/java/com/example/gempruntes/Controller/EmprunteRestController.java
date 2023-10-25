@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("Empruntes")
+@CrossOrigin(origins = "*")
 public class EmprunteRestController {
     @Autowired
     EmprunteService emprunteService;
@@ -18,7 +19,7 @@ public class EmprunteRestController {
     @PostMapping("/creeEmprunte")
     public  Emprunte creeEmprunte(@RequestBody Emprunte emprunte){return emprunteService.creeEmprunte(emprunte);}
     @GetMapping("/trouverEmprunte/{id}")
-    public  Emprunte trouveEmprunte(@RequestParam long id){return emprunteService.getById(id);}
+    public  Emprunte trouveEmprunte(@PathVariable("id")long id){return emprunteService.getById(id);}
     @PutMapping("modifierEmprunte/{id}")
     public Emprunte ModifierEprunte(@PathVariable("id") long id ,@RequestBody Emprunte emprunte){
 
