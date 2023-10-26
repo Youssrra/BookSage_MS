@@ -8,6 +8,15 @@ services:
     networks:
       - my-network
 
+    db-mysql:
+      image: "mysql"
+      container_name: db-mysql  
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+      ports:
+        - "3307:3306"
+      restart: unless-stopped 
+
   ms-gestion-user:
     image: ms-gestion-utilisateur-image
     container_name: ms-gestion-utilisateur-container
@@ -18,15 +27,31 @@ services:
     depends_on:
       - eureka-server
 
-  ms-review:
-    image: ms-review-image
-    container_name: ms-review-container
+  ms-livre:
+    image: ms-livre-image
+    container_name: ms-livre-container
     ports:
-      - "5000:5000"
+      - "8686:8686"
     networks:
       - my-network
     depends_on:
       - eureka-server
 
+
+  ms-emprunt:
+    image: ms-emprunt-image
+    container_name: ms-emprunt-container
+    ports:
+      - "8280:8280"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/empruntes?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    restart: unless-stopped
+    depends_on:
+      - Eureka
+      - db-mysql
+
 networks:
   my-network:
+
