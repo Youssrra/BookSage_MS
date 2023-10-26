@@ -59,9 +59,4 @@ public class BookController {
 
     }
 
-    @GetMapping("/authors/{id}")
-    public List<Book> findAllAuthorBooks(@PathVariable("id") Long id){
-        return bookService.findAllAuthorBooks(id);
-    }
-
 }

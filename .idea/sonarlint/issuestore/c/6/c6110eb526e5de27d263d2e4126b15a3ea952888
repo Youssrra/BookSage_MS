@@ -1,0 +1,9 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ëè‘„øÿÿÿÿ
+V
+java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(ý»§€
+<
+java:S1452"&Remove usage of generic wildcard type.(ý»§€
+[
+java:S4684!"@Replace this persistent entity with a simple POJO or DTO object.(×ÀÏúýÿÿÿÿ
+c	java:S1008"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïôÝ„
