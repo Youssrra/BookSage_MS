@@ -1,13 +1,13 @@
 <div class="right_col" role="main">
     <div class="page-title">
       <div class="title_left">
-        <h3>Book List</h3>
+        <h3>Author List</h3>
       </div>
   
       <div class="title_right">
         <div class="col-md-5 col-sm-5 form-group pull-right top_search">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="search" (input)="filterBooks()">
+            <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="search" (input)="filterAuthors()">
             <span class="input-group-btn">
               <button class="btn btn-default" type="button">Search!</button>
             </span>
@@ -34,13 +34,13 @@
                                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLabel">Add New Book</h5>
+                                      <h5 class="modal-title" id="exampleModalLabel">Add New Author</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                       </button>
                                     </div>
                                     <div class="modal-body">
-                                      <app-add-book></app-add-book>
+                                      <app-add-authors></app-add-authors>
                                     </div>
                                   </div>
                                 </div>
@@ -61,35 +61,33 @@
               <th>
                 <input type="checkbox" id="check-all" class="flat" hidden>
               </th>
-              <th>ISBN</th>
-              <th>TITLE</th>
-              <th>AUTHOR</th>
-              <th>PRICE</th>
-              <th>CATEGORY</th>
-              <th>AVAIBILITY</th>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>BIOGRAPHY</th>
               <th class="text-center">Action</th>
             </tr>
           </thead>
-    
+
           <tbody>
-            <tr class="even pointer" *ngFor="let l of filteredBooks | paginate: { itemsPerPage: 6, currentPage: p }">
+            <tr class="even pointer" *ngFor="let l of filteredAuthors | paginate: { itemsPerPage: 6, currentPage: p }">
     
               <td>
                 <input type="checkbox" class="flat" name="table_records">
               </td>
     
-              <td>{{ l.isbn.length > 20 ? (l.isbn | slice:0:20) + '...' : l.isbn }}</td>
-              <td>{{ l.title.length > 20 ? (l.title | slice:0:20) + '...' : l.title }}</td>
-              <td>{{ l.author.name.length > 20 ? (l.author.name | slice:0:20) + '...' : l.author.name }}</td>
-              <td>{{ l.price.length > 20 ? (l.price | slice:0:20) + '...' : l.price }}</td>
-              <td>{{ l.category.nom.length > 20 ? (l.category.nom | slice:0:20) + '...' : l.category.nom }}</td>              <td>
-                <span *ngIf="l.avaibility==true" class="badge badge-success"> Avaible  <i class="fa fa-check"></i></span>
-                <span *ngIf="l.avaibility==false" class="badge badge-danger"> Unavaible  <i class="fa fa-check"></i></span>
-              </td>
+              <td>{{ l.id.length > 20 ? (l.id | slice:0:20) + '...' : l.id }}</td>
+              <td>{{ l.name.length > 20 ? (l.name | slice:0:20) + '...' : l.name }}</td>
+              <td>{{ l.biography.length > 20 ? (l.biography | slice:0:20) + '...' : l.biography }}</td>
+              
               <td class="text-center">
-                <a routerLink="/books/update/{{ l.id }}" class="btn btn-success btn-sm">
+                <a routerLink="/authors/update/{{ l.id }}" class="btn btn-success btn-sm">
                   <i class="fa fa-info"></i> Detail
                 </a>
+
+                <a routerLink="/authors/books/{{ l.id }}" class="btn btn-success btn-sm">
+                    <i class="fa fa-info"></i> Books
+                  </a>
+
                 <a (click)="delete(l.id)" class="btn btn-danger btn-sm">
                   <i class="fas fa-trash"></i> Delete
                 </a>
@@ -106,7 +104,7 @@
             </td>
   
           </tr>
-            <tr *ngIf="filteredBooks.length === 0 && message == 'DataLoaded'">
+            <tr *ngIf="filteredAuthors.length === 0 && message == 'DataLoaded'">
               <td colspan="8" class="text-center no-data-found">
                Data Not Found
               </td>
@@ -139,14 +137,14 @@
                       
                         
                       <div class="alert alert-success d-flex align-items-center" *ngIf="successAlertVisible" role="alert">
-                          Book deleted successfully !
+                        Author deleted successfully !
                           <button type="button" class="close align-self-start ml-auto" (click)="closeSuccessAlert()" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         
                         <div class="alert alert-danger d-flex align-items-center" *ngIf="errorAlertVisible" role="alert">
-                        cound not delete this Book!
+                         cound not delete this author!
                           <button type="button" class="close align-self-start ml-auto" (click)="closeErrorAlert()" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>

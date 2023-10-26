@@ -49,4 +49,8 @@ public class BookService {
     }
 
 
+    public List<Book> findAllAuthorBooks(Long id){
+        return bookRepository.findBookByAuthor(id);
+    }
+
 }

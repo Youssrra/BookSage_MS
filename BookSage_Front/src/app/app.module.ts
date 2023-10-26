@@ -51,6 +51,10 @@ import { AddCategoryComponent } from './category/add-category/add-category.compo
 import { AddEmpruntComponent } from './emprunt/add-emprunt/add-emprunt.component';
 import { DisplayEmpruntComponent } from './emprunt/display-emprunt/display-emprunt.component';
 import { UpdateEmpruntComponent } from './emprunt/update-emprunt/update-emprunt.component';
+import { DisplayAuthorsComponent } from './authors/display-authors/display-authors.component';
+import { AddAuthorsComponent } from './authors/add-authors/add-authors.component';
+import { UpdateAuthorsComponent } from './authors/update-authors/update-authors.component';
+import { BooksAuthorsComponent } from './authors/books-authors/books-authors.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +97,10 @@ import { UpdateEmpruntComponent } from './emprunt/update-emprunt/update-emprunt.
     AddEmpruntComponent,
     DisplayEmpruntComponent,
     UpdateEmpruntComponent,
+    DisplayAuthorsComponent,
+    AddAuthorsComponent,
+    UpdateAuthorsComponent,
+    BooksAuthorsComponent,
    
   ],
   imports: [

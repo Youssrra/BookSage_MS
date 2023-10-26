@@ -31,6 +31,10 @@ import { UpdateBookComponent } from './book/update-book/update-book.component';
 import { DisplayEmpruntComponent } from './emprunt/display-emprunt/display-emprunt.component';
 import { AddEmpruntComponent } from './emprunt/add-emprunt/add-emprunt.component';
 import { UpdateEmpruntComponent } from './emprunt/update-emprunt/update-emprunt.component';
+import { DisplayAuthorsComponent } from './authors/display-authors/display-authors.component';
+import { AddAuthorsComponent } from './authors/add-authors/add-authors.component';
+import { UpdateAuthorsComponent } from './authors/update-authors/update-authors.component';
+import { BooksAuthorsComponent } from './authors/books-authors/books-authors.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -56,9 +60,13 @@ const routes: Routes = [
   { path: 'books/add', component: AddBookComponent },
   { path: 'books/category/add', component: AddCategoryComponent },
   { path: 'books/update/:id', component: UpdateBookComponent },
-  { path: 'lons', component: DisplayEmpruntComponent },
-  { path: 'lons/add', component: AddEmpruntComponent },
-  { path: 'lons/update/:id', component: UpdateEmpruntComponent },
+  { path: 'loans', component: DisplayEmpruntComponent },
+  { path: 'loans/add', component: AddEmpruntComponent },
+  { path: 'loans/update/:id', component: UpdateEmpruntComponent },
+  { path: 'authors', component: DisplayAuthorsComponent },
+  { path: 'authors/add', component: AddAuthorsComponent },
+  { path: 'authors/update/:id', component: UpdateAuthorsComponent },
+  { path: 'authors/books/:id', component: BooksAuthorsComponent },
 
 
 
