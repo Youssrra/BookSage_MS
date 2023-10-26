@@ -3,40 +3,33 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthorsService } from 'src/app/_services/authors.service';
 import { BooksService } from 'src/app/_services/books.service';
-import { UserService } from 'src/app/_services/user.service';
 
 @Component({
-  selector: 'app-display-books',
-  templateUrl: './display-books.component.html',
-  styleUrls: ['./display-books.component.css']
+  selector: 'app-display-authors',
+  templateUrl: './display-authors.component.html',
+  styleUrls: ['./display-authors.component.css']
 })
-export class DisplayBooksComponent {
+export class DisplayAuthorsComponent {
   liste: any[] = [];
   p: number = 1;
   search: string = '';
-  filteredBooks: any[] = [];
+  filteredAuthors: any[] = [];
   successAlertVisible = false;
   errorAlertVisible = false;
   message: string = "WAITING FOR DATA ";
 
 
-  constructor(private auth: UserService, private router: Router, private cookieService: CookieService, private bookService : BooksService, private authorService: AuthorsService) {
+  constructor(private router: Router, private cookieService: CookieService, private bookService : BooksService,private authorService : AuthorsService) {
     
-      this.bookService.listeallBooks().subscribe((data: any) => {
+      this.authorService.listeallAuthors().subscribe((data: any) => {
         data.forEach((element: any) => {
-
-          this.authorService.getAuthortById(element.author).subscribe(data2 => {
-            
-              element.author = data2 ;
-          }
-              );
           console.log(element);
         });
 
 
 
         this.liste = data;
-        this.filteredBooks = data;
+        this.filteredAuthors = data;
         this.DataLoaded() ;
       })
     
@@ -44,8 +37,8 @@ export class DisplayBooksComponent {
 
   }
   
-  filterBooks() {
-    this.filteredBooks = this.liste.filter((client) => {
+  filterAuthors() {
+    this.filteredAuthors = this.liste.filter((client) => {
       for (let key in client) {
         const value = client[key];
         if (value && value.toString().toLowerCase().includes(this.search.toLowerCase())) {
@@ -57,17 +50,17 @@ export class DisplayBooksComponent {
   }
 
   delete(id: any) {
-    if (confirm("Do you really want to delete this book  ?")) {
+    if (confirm("Do you really want to delete this author  ?")) {
 
-      console.log("u=id : "+id)
-      this.bookService.deleteBook(id).subscribe(
+      console.log("id : "+id)
+      this.authorService.deleteAuthor(id).subscribe(
         (response: any) => {
-          console.log('Book deleted successfully');
+          console.log('Loan deleted successfully');
           this.errorAlertVisible = false;
           this.successAlertVisible = true;
         },
         (error: any) => {
-          console.error('Error while deleting book:', error);
+          console.error('Error while deleting author:', error);
           console.log('Response body:', error?.error);
           this.successAlertVisible = false;
           this.errorAlertVisible = true;

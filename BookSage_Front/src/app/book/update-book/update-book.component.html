@@ -43,18 +43,15 @@
       </div>
     </div>
 
-
     <div class="item form-group">
-        <label class="col-form-label col-md-3 col-sm-3 label-align" for="Author">Author <span class="required">*</span></label>
-        <div class="col-md-6 col-sm-6">
-          <input type="text" [(ngModel)]="book.author" id="Author" name="author" #author="ngModel" required class="form-control"
-          (blur)="author.control.markAsTouched()">
-          <div *ngIf="author.invalid && (author.dirty || author.touched)">
-            <div *ngIf="author.errors?.['required']" class="error-message">Book author name cannot be empty.</div>
-          </div>
-        </div>
+      <label for="selectAuthor" class="col-form-label col-md-3 col-sm-3 label-align">Author<span class="required">*</span></label>
+      <div class="col-md-6 col-sm-6">
+        <select [(ngModel)]="book.author" name="selectAuthor" id="selectAuthor" class="form-control" required>
+          <option value="" disabled selected>{{ 'Select a author' }}</option>
+          <option *ngFor="let a of listeAuthor;" [value]="a.id">{{ a.name }}</option>
+        </select>
       </div>
-
+    </div>
 
     <div class="item form-group">
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="Price">Price <span class="required">*</span></label>

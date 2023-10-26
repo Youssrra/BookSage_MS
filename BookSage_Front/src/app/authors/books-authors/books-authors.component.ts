@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { AuthorsService } from 'src/app/_services/authors.service';
 import { BooksService } from 'src/app/_services/books.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
-  selector: 'app-display-books',
-  templateUrl: './display-books.component.html',
-  styleUrls: ['./display-books.component.css']
+  selector: 'app-books-authors',
+  templateUrl: './books-authors.component.html',
+  styleUrls: ['./books-authors.component.css']
 })
-export class DisplayBooksComponent {
+export class BooksAuthorsComponent {
+
   liste: any[] = [];
   p: number = 1;
   search: string = '';
@@ -18,18 +18,20 @@ export class DisplayBooksComponent {
   successAlertVisible = false;
   errorAlertVisible = false;
   message: string = "WAITING FOR DATA ";
+  idAuthor !: any ;
 
+  constructor(private auth: UserService, private router: Router, private cookieService: CookieService, private bookService : BooksService, 
+    private route:ActivatedRoute)
+  {
 
-  constructor(private auth: UserService, private router: Router, private cookieService: CookieService, private bookService : BooksService, private authorService: AuthorsService) {
+     this.route.params.subscribe(params => {
+       this.idAuthor = params['id'];
+       // Use the 'id' parameter in your component logic
+       console.log("idAuthor : "+this.idAuthor);
+     });
     
-      this.bookService.listeallBooks().subscribe((data: any) => {
+      this.bookService.getBookByIdAuthor(this.idAuthor).subscribe((data: any) => {
         data.forEach((element: any) => {
-
-          this.authorService.getAuthortById(element.author).subscribe(data2 => {
-            
-              element.author = data2 ;
-          }
-              );
           console.log(element);
         });
 

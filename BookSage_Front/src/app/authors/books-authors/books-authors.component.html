@@ -1,7 +1,7 @@
 <div class="right_col" role="main">
     <div class="page-title">
       <div class="title_left">
-        <h3>Book List</h3>
+        <h3>Author Book List</h3>
       </div>
   
       <div class="title_right">
@@ -63,7 +63,6 @@
               </th>
               <th>ISBN</th>
               <th>TITLE</th>
-              <th>AUTHOR</th>
               <th>PRICE</th>
               <th>CATEGORY</th>
               <th>AVAIBILITY</th>
@@ -80,7 +79,6 @@
     
               <td>{{ l.isbn.length > 20 ? (l.isbn | slice:0:20) + '...' : l.isbn }}</td>
               <td>{{ l.title.length > 20 ? (l.title | slice:0:20) + '...' : l.title }}</td>
-              <td>{{ l.author.name.length > 20 ? (l.author.name | slice:0:20) + '...' : l.author.name }}</td>
               <td>{{ l.price.length > 20 ? (l.price | slice:0:20) + '...' : l.price }}</td>
               <td>{{ l.category.nom.length > 20 ? (l.category.nom | slice:0:20) + '...' : l.category.nom }}</td>              <td>
                 <span *ngIf="l.avaibility==true" class="badge badge-success"> Avaible  <i class="fa fa-check"></i></span>

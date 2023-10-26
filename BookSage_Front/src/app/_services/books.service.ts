@@ -33,6 +33,9 @@ export class BooksService {
     return this.httpclient.put(`http://localhost:8686/books/update`,book,{responseType:"text"})
   }
 
+  public getBookByIdAuthor(id:any):Observable<any>{
+    return this.httpclient.get(`http://localhost:8686/books/authors/${id}`,{responseType:"json"});
+  }
 
 
 
