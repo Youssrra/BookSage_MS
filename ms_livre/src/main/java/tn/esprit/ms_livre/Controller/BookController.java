@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.ms_livre.Entity.Book;
 import tn.esprit.ms_livre.Services.BookService;
 
+import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -57,6 +58,17 @@ public class BookController {
     {
         return ResponseEntity.ok(bookService.CountBooksByCategory(id));
 
+    }
+
+    @GetMapping("/generatepdf")
+    public ResponseEntity<String> generatePdfFromBooks() {
+        try {
+            bookService.generatePdfFromBooks();
+            return ResponseEntity.ok("PDF generated successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to generate PDF: " + e.getMessage());
+        }
     }
 
 }

@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="MS_Gestion_utilisateur" />
+        <module name="ms_auteur" />
         <module name="Gateway" />
         <module name="ms_livre" />
         <module name="GEmpruntes" />
@@ -21,6 +22,7 @@
       <module name="GEmpruntes" options="-parameters" />
       <module name="Gateway" options="-parameters" />
       <module name="MS_Gestion_utilisateur" options="-parameters" />
+      <module name="ms_auteur" options="-parameters" />
       <module name="ms_livre" options="-parameters" />
     </option>
   </component>

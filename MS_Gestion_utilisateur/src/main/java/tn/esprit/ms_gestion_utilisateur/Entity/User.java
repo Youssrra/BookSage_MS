@@ -23,6 +23,7 @@ public class User {
 
     private String firstName;
     private String lastName;
+    private Boolean active ;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -32,6 +33,13 @@ public class User {
         super();
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     public Integer getId() {
         return id;

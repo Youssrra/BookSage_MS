@@ -5,14 +5,32 @@ services:
     container_name: eureka-server
     ports:
       - "8761:8761"
+    restart: unless-stopped
     networks:
       - my-network
+
+  gateway-server:
+    image: gateway-image
+    container_name: gateway-container
+    ports:
+      - "8090:8090"
+    restart: unless-stopped
+    networks:
+      - my-network
+    depends_on:
+      - ms-gestion-user
+    environment:
+      SPRING_PROFILES_ACTIVE: path
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_URI: http://ms-gestion-user:8888
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_ID: ms-gestion-user
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_PREDICATES[0]: Path=/ms_gestion_user/users/**
 
   ms-gestion-user:
     image: ms-gestion-utilisateur-image
     container_name: ms-gestion-utilisateur-container
     ports:
       - "8888:8888"
+    restart: unless-stopped
     networks:
       - my-network
     depends_on:
@@ -23,44 +41,55 @@ services:
     container_name: ms-livre-container
     ports:
       - "8686:8686"
+    restart: unless-stopped
     networks:
       - my-network
     depends_on:
       - eureka-server
 
-  #ms-emprunt:
-  #  container_name: ms-emprunt-container
-  #  ports:
-  #    - "8280:8280"
-  #  environment:
-  #    - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/empruntes?createDatabaseIfNotExist=true&userSSL=false&max_allowed_packet=15728640
-  #    - SPRING_DATASOURCE_USERNAME=root
-  #    - SPRING_DATASOURCE_PASSWORD=
-  #  image: ms-emprunt-image
-  #  restart: unless-stopped
-  #  depends_on:
-  #    - eureka-server
-  #    - db-mysql
+  ms-emprunt:
+    container_name: ms-emprunt-container
+    ports:
+      - "8280:8280"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/empruntes?autoReconnect=true&useSSL=false
+    image: ms-emprunt-image
+    restart: unless-stopped
+    depends_on:
+      - eureka-server
+      - db-mysql
 
-  db-mysql:
-      image: "mysql:latest"
-      container_name: db-mysql  
-      environment:
-        - MYSQL_ROOT_PASSWORD=root
-        #- MYSQL_DATABASE=job
-      ports:
-        - "3307:330"
-      restart: unless-stopped  
+  ms-auteur:
+    image: ms-auteur-image
+    container_name: ms-auteur-container
+    ports:
+      - "8787:8787"
+    restart: unless-stopped
+    networks:
+      - my-network
+    depends_on:
+      - eureka-server
 
   ms-review:
     image: ms-review-image
     container_name: ms-review-container
     ports:
       - "5000:5000"
+    restart: unless-stopped
     networks:
       - my-network
     depends_on:
       - eureka-server
+
+  db-mysql:
+    image: "mysql:5.6"
+    container_name: db-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=empruntes
+    ports:
+      - "3307:330"
+    restart: unless-stopped
 
 networks:
   my-network:

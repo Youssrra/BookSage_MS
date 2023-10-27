@@ -9,8 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.http.HttpSession;
@@ -30,7 +28,6 @@ import tn.esprit.ms_gestion_utilisateur.SecurityConfig.TokenService;
 import tn.esprit.ms_gestion_utilisateur.Services.UserDetailsImpl;
 import tn.esprit.ms_gestion_utilisateur.Services.UserService;
 
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
@@ -92,6 +89,7 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         Role roles = roleRepository.findByName(ERole.ADMIN).get();
         user.setRoles(Collections.singleton(roles));
+        user.setActive(true);
         userRepository.save(user);
         return new ResponseEntity<>("User is registered successfully!", HttpStatus.OK);
     }
@@ -116,6 +114,7 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         Role roles = roleRepository.findByName(ERole.CLIENT).get();
         user.setRoles(Collections.singleton(roles));
+        user.setActive(true);
         userRepository.save(user);
         return new ResponseEntity<>("Client is registered successfully!", HttpStatus.OK);
     }
@@ -262,20 +261,49 @@ public class UserController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpSession session,@RequestBody String username) {
-        Optional<User> user = userRepository.findUserByUsername(username);
-        if (user.isPresent()) {
-            User u = user.get();
-            Integer numSessions = sessionCountMap.get(u.getEmail());
+    public ResponseEntity<String> logout(HttpSession session, @RequestBody String username) {
+        Optional<User> userOptional = userRepository.findUserByUsername(username);
 
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
 
-            if (numSessions != null && numSessions > 0) {
-                numSessions--;
-                sessionCountMap.put(u.getEmail(), numSessions);
+            if (!user.getActive()) { // Check if the user is not active
+                Integer numSessions = sessionCountMap.get(user.getEmail());
+
+                if (numSessions != null && numSessions > 0) {
+                    numSessions--;
+                    sessionCountMap.put(user.getEmail(), numSessions);
+                }
+                session.invalidate(); // Clear the user's session
+                return ResponseEntity.ok("Logged out successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User is active and cannot log out.");
             }
-            session.invalidate(); // Clear the user's session
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
-        return ResponseEntity.ok("Logged out successfully.");
+    }
+
+
+    @GetMapping("/export/clients")
+    public String exportClientsToCsv() {
+        try {
+            userService.exportClientToCsv();
+            return "Data history exported to CSV file";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        }
+
+
+    @GetMapping("/export/admins")
+    public String exportAdminsToCsv() {
+        try {
+            userService.exportAdminToCsv();
+            return "Data history exported to CSV file";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
 

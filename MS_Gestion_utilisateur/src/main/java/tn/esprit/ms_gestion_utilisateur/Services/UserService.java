@@ -1,13 +1,24 @@
 package tn.esprit.ms_gestion_utilisateur.Services;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 import tn.esprit.ms_gestion_utilisateur.Entity.ERole;
 import tn.esprit.ms_gestion_utilisateur.Entity.Role;
 import tn.esprit.ms_gestion_utilisateur.Entity.User;
 import tn.esprit.ms_gestion_utilisateur.Repository.RoleRepository;
 import tn.esprit.ms_gestion_utilisateur.Repository.UserRepository;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +62,12 @@ public class UserService {
         }
         existingUser.setLastName(userRequest.getLastName());
 
+        if (userRequest.getActive() == null ) {
+            userRequest.setActive(existingUser.getActive());
+        }
+        existingUser.setActive(userRequest.getActive());
+
+
         return userRepository.save(existingUser);
     }
 
@@ -67,6 +84,90 @@ public class UserService {
     public List<User> findUsersByRoleAdmin() {
         return userRepository.findUsersByRole(ERole.ADMIN);
     }
+
+
+    public void exportClientToCsv() throws IOException {
+        List<User> clients = userRepository.findUsersByRole(ERole.CLIENT);
+
+        String userHomeDir = System.getProperty("user.home");
+        String downloadsDir = userHomeDir + File.separator + "Downloads";
+        String excelFilePath = downloadsDir + File.separator + "clients.xlsx";
+
+
+        // Create a new Excel workbook
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Clients");
+
+            // Create a header row
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"ID", "USERNAME", "EMAIL", "PASSWORD", "FIRSTNAME", "LASTNAME", "ACTIVE"};
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+            }
+
+            // Fill in data
+            int rowNum = 1;
+            for (User user : clients) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(user.getId());
+                row.createCell(1).setCellValue(user.getUsername());
+                row.createCell(2).setCellValue(user.getEmail());
+                row.createCell(3).setCellValue(user.getPassword());
+                row.createCell(4).setCellValue(user.getFirstName());
+                row.createCell(5).setCellValue(user.getLastName());
+                row.createCell(6).setCellValue(user.getActive());
+            }
+
+            // Write the Excel file
+            try (FileOutputStream outputStream = new FileOutputStream(excelFilePath)) {
+                workbook.write(outputStream);
+            }
+        }
+    }
+
+
+    public void exportAdminToCsv() throws IOException {
+        List<User> admins = userRepository.findUsersByRole(ERole.ADMIN);
+
+        String userHomeDir = System.getProperty("user.home");
+        String downloadsDir = userHomeDir + File.separator + "Downloads";
+        String excelFilePath = downloadsDir + File.separator + "admins.xlsx";
+
+
+        // Create a new Excel workbook
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Admins");
+
+            // Create a header row
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"ID", "USERNAME", "EMAIL", "PASSWORD", "FIRSTNAME", "LASTNAME", "ACTIVE"};
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+            }
+
+            // Fill in data
+            int rowNum = 1;
+            for (User user : admins) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(user.getId());
+                row.createCell(1).setCellValue(user.getUsername());
+                row.createCell(2).setCellValue(user.getEmail());
+                row.createCell(3).setCellValue(user.getPassword());
+                row.createCell(4).setCellValue(user.getFirstName());
+                row.createCell(5).setCellValue(user.getLastName());
+                row.createCell(6).setCellValue(user.getActive());
+            }
+
+            // Write the Excel file
+            try (FileOutputStream outputStream = new FileOutputStream(excelFilePath)) {
+                workbook.write(outputStream);
+            }
+        }
+    }
+
+
 
 }
 
