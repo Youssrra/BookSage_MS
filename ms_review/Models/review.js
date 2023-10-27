@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const { Long, Int32 } = require("mongodb");
 
 const reviewSchema = new mongoose.Schema({
 	userId: {
