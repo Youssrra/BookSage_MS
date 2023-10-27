@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { Error403Component } from './error/error403/error403.component';
 import { HomeComponent } from './home/home.component';
 import { Error404Component } from './error/error404/error404.component';
@@ -35,6 +34,7 @@ import { DisplayAuthorsComponent } from './authors/display-authors/display-autho
 import { AddAuthorsComponent } from './authors/add-authors/add-authors.component';
 import { UpdateAuthorsComponent } from './authors/update-authors/update-authors.component';
 import { BooksAuthorsComponent } from './authors/books-authors/books-authors.component';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/login', pathMatch: 'full' },

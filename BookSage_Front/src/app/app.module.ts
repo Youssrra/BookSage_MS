@@ -55,6 +55,7 @@ import { DisplayAuthorsComponent } from './authors/display-authors/display-autho
 import { AddAuthorsComponent } from './authors/add-authors/add-authors.component';
 import { UpdateAuthorsComponent } from './authors/update-authors/update-authors.component';
 import { BooksAuthorsComponent } from './authors/books-authors/books-authors.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { BooksAuthorsComponent } from './authors/books-authors/books-authors.com
     AddAuthorsComponent,
     UpdateAuthorsComponent,
     BooksAuthorsComponent,
+    UpdateUserComponent,
    
   ],
   imports: [

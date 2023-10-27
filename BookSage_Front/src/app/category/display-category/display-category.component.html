@@ -24,7 +24,7 @@
                           <div class="card">
                             <div class="card-header">
                              
-                              <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+                              <button *ngIf="role.includes('ADMIN')" type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
                                 <i class="fa fa-plus"></i> Add
                               </button>
                             </div>
@@ -64,7 +64,7 @@
               <th>ID</th>
               <th>NAME</th>
               <th>TOTAL BOOKS</th>
-              <th class="text-center">Action</th>
+              <th class="text-center" *ngIf="role.includes('ADMIN')">Action</th>
             </tr>
           </thead>
     
@@ -79,7 +79,7 @@
               <td>{{ l.nom.length > 20 ? (l.nom | slice:0:20) + '...' : l.nom }}</td>
               <td>{{ l.books.length > 20 ? (l.books | slice:0:20) + '...' : l.books }}</td>
               <td class="text-center">
-                <a (click)="delete(l.id)" class="btn btn-danger btn-sm">
+                <a (click)="delete(l.id)" class="btn btn-danger btn-sm" *ngIf="role.includes('ADMIN')">
                   <i class="fas fa-trash"></i> Delete
                 </a>
               </td>

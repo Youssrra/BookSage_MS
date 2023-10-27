@@ -37,6 +37,10 @@ export class BooksService {
     return this.httpclient.get(`http://localhost:8686/ms_livre/books/authors/${id}`,{responseType:"json"});
   }
 
+  public generatePdf():Observable<any>{
+    return this.httpclient.get(`http://localhost:8686/ms_livre/books/generatepdf`,{responseType:"text"});
+  }
+
 
 
   //CATEGORY

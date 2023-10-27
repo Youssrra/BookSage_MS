@@ -34,7 +34,7 @@
                 </ul>
             </li>
             
-            <li><a routerLink="/loans">Lons</a></li>
+            <li><a routerLink="/loans" *ngIf="role.includes('ADMIN')">Lons</a></li>
             <li><a routerLink="/authors">Authors</a></li>
 
           </ul>

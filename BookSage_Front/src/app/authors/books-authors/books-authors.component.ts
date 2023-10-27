@@ -46,6 +46,8 @@ export class BooksAuthorsComponent {
 
   }
   
+  role = this.cookieService.get("Role");
+
   filterBooks() {
     this.filteredBooks = this.liste.filter((client) => {
       for (let key in client) {

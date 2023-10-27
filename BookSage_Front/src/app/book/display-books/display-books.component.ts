@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import FileSaver from 'file-saver';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthorsService } from 'src/app/_services/authors.service';
 import { BooksService } from 'src/app/_services/books.service';
@@ -17,10 +18,12 @@ export class DisplayBooksComponent {
   filteredBooks: any[] = [];
   successAlertVisible = false;
   errorAlertVisible = false;
+  exportsuccessAlertVisible = false;
+  exporterrorAlertVisible = false;
   message: string = "WAITING FOR DATA ";
 
 
-  constructor(private auth: UserService, private router: Router, private cookieService: CookieService, private bookService : BooksService, private authorService: AuthorsService) {
+  constructor(private bookService : BooksService, private authorService: AuthorsService, private httpclient: HttpClient, private cookieService: CookieService) {
     
       this.bookService.listeallBooks().subscribe((data: any) => {
         data.forEach((element: any) => {
@@ -76,6 +79,33 @@ export class DisplayBooksComponent {
     }
   }
 
+
+  export() {
+   
+      if (confirm("Do you want to export user list  ?")) {
+  
+        this.httpclient.get('http://localhost:8686/ms_livre/books/generatepdf', { responseType: 'blob' }).subscribe(
+          (data: Blob) => {
+          
+            FileSaver.saveAs(data, 'book_list.pdf');
+            console.log('Book List exported successfully');
+            this.exporterrorAlertVisible = false;
+            this.exportsuccessAlertVisible = true;
+          },
+          (error) => {
+            console.error('Failed to export data: ', error);
+            console.error('Error while exporting book list:', error);
+            console.log('Response body:', error?.error);
+            this.exportsuccessAlertVisible = false;
+            this.exporterrorAlertVisible = true;
+          }
+        );
+        
+        }
+    
+  }
+  role = this.cookieService.get("Role");
+
   closeSuccessAlert() {
     this.successAlertVisible = false;
     window.location.reload();
@@ -85,6 +115,18 @@ export class DisplayBooksComponent {
   closeErrorAlert() {
     this.errorAlertVisible = false;
     window.location.reload();
+
+  }
+
+  exportcloseSuccessAlert() {
+    this.exportsuccessAlertVisible = false;
+    //window.location.reload();
+
+  }
+
+  exportcloseErrorAlert() {
+    this.exporterrorAlertVisible = false;
+    //window.location.reload();
 
   }
 

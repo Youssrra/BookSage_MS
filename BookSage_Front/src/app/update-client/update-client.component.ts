@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { UserAuthService } from 'src/app/_services/user-auth.service';
 import { UserService } from 'src/app/_services/user.service';
@@ -18,6 +18,8 @@ export class UpdateClientComponent {
   id !: any ;
   successAlertVisible = false;
   errorAlertVisible = false;
+  selectAvaibility: any = false;
+
   constructor(
     private route: Router, private cookieService: CookieService ,  private userauth: UserAuthService,
     private userservice : UserService,   private router: ActivatedRoute) {

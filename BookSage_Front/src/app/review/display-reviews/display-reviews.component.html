@@ -98,8 +98,8 @@
                   </div>
                 </div>
                 
-                <a (click)="delete(l._id)" class="btn btn-danger btn-sm">
-                  <i class="fas fa-trash"></i> Delete
+                <a (click)="delete(l._id)" class="btn btn-danger btn-sm" *ngIf="role.includes('ADMIN')">
+                  <i class="fas fa-trash" ></i> Delete
                 </a>
               </td>
             </tr>

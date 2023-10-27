@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { UserService } from '../_services/user.service';
-import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-client',
@@ -17,10 +19,15 @@ export class ClientComponent {
   errorAlertVisible = false;
   isGridView: boolean = false;
   message: string = "WAITING FOR DATA ";
+   exportsuccessAlertVisible = false;
+  exporterrorAlertVisible = false;
 
-  constructor(private auth: UserService, private router: Router, private cookieService: CookieService) {
+  
+  constructor(private auth: UserService, private router: Router, private cookieService: CookieService,
+    private httpclient: HttpClient) {
     //  console.log("test");
    
+
 
       //
       this.auth.listeallClient().subscribe((data: any) => {
@@ -81,6 +88,29 @@ export class ClientComponent {
     }
   }
 
+  export() {
+    if (confirm("Do you want to export user list  ?")) {
+
+      this.httpclient.get('http://localhost:8888/ms_gestion_user/users/export/clients', { responseType: 'blob' }).subscribe(
+        (data: Blob) => {
+        
+          FileSaver.saveAs(data, 'clients.xlsx');
+          console.log('client List exported successfully');
+          this.exporterrorAlertVisible = false;
+          this.exportsuccessAlertVisible = true;
+        },
+        (error) => {
+          console.error('Failed to export data: ', error);
+          console.error('Error while exporting client list:', error);
+          console.log('Response body:', error?.error);
+          this.exportsuccessAlertVisible = false;
+          this.exporterrorAlertVisible = true;
+        }
+      );
+      
+      }
+  }
+
   closeSuccessAlert() {
     this.successAlertVisible = false;
     window.location.reload();
@@ -93,6 +123,18 @@ export class ClientComponent {
 
   }
 
+
+  exportcloseSuccessAlert() {
+    this.exportsuccessAlertVisible = false;
+    //window.location.reload();
+
+  }
+
+  exportcloseErrorAlert() {
+    this.exporterrorAlertVisible = false;
+    //window.location.reload();
+
+  }
 
   DataLoaded(){
     this.message ="DataLoaded";

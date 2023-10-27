@@ -49,6 +49,9 @@ export class DisplayReviewsComponent {
 
     }
 
+    role = this.cookieService.get("roles") ;
+
+
     filterReviews() {
       this.filteredReviews = this.liste.filter((client) => {
         for (let key in client) {

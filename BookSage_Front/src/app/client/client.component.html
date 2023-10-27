@@ -27,6 +27,11 @@
                             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
                               <i class="fa fa-plus"></i> Add
                             </button>
+
+                            <a (click)="export()" class="btn btn-warning float-right">
+                              <i class="fa-file-excel-o"></i> Export
+                            </a>
+
                           </div>
                           <div class="card-body">
                             <!-- Add Admin Modal -->
@@ -80,6 +85,7 @@
             <th>FIRSTNAME</th>
             <th>LASTNAME</th>
             <th>EMAIL</th>
+            <th>ACTIVE</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
@@ -96,7 +102,10 @@
             <td>{{ l.firstName.length > 20 ? (l.firstName | slice:0:20) + '...' : l.firstName }}</td>
             <td>{{ l.lastName.length > 20 ? (l.lastName | slice:0:20) + '...' : l.lastName }}</td>
             <td>{{ l.email.length > 20 ? (l.email | slice:0:20) + '...' : l.email }}</td>
-            <td class="text-center">
+            <td>
+              <span *ngIf="l.active==true" class="badge badge-success"> Enable   <i class="fa fa-check"></i></span>
+              <span *ngIf="l.active==false" class="badge badge-danger">  Disable  <i class="fa fa-check"></i></span>
+            </td>            <td class="text-center">
               <a routerLink="/user/update/{{ l.id }}" class="btn btn-success btn-sm">
                 <i class="fa fa-info"></i> Detail
               </a>
@@ -227,6 +236,21 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
+
+                      <div class="alert alert-success d-flex align-items-center" *ngIf="exportsuccessAlertVisible" role="alert">
+                        User list exported successfully !
+                        <button type="button" class="close align-self-start ml-auto" (click)="exportcloseSuccessAlert()" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    
+                    
+                      <div class="alert alert-danger d-flex align-items-center" *ngIf="exporterrorAlertVisible" role="alert">
+                        cound not export !
+                          <button type="button" class="close align-self-start ml-auto" (click)="exportcloseErrorAlert()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
                       
 
        

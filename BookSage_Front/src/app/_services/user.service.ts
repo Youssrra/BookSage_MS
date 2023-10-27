@@ -4,6 +4,7 @@ import { UserAuthService } from './user-auth.service';
 import { Login } from '../request/login';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { User } from '../request/User';
+import * as FileSaver from 'file-saver';
 
 
 
@@ -34,6 +35,11 @@ export class UserService {
   public addAdmin(login:Login):Observable<any>{
     return this.httpclient.post("http://localhost:8888/users/signup/{id}",login,{headers:this.requestHeader})
 }*/
+
+
+
+
+
   public test():Observable<any>{
     return this.httpclient.get("http://localhost:8888/ms_gestion_user/test",{responseType:"text"});
   }
@@ -55,6 +61,26 @@ export class UserService {
 
   public listeallClient():Observable<any>{
     return this.httpclient.get("http://localhost:8888/ms_gestion_user/users/getAllClient",{responseType:"json"});
+  }
+
+
+  public generateClientXML():Observable<any>{
+    return this.httpclient.get(`http://localhost:8888/ms_gestion_user/users/export/clients`,{responseType:"text"});
+  }
+
+
+  public generateAdminXML(){
+     //this.httpclient.get(`http://localhost:8888/ms_gestion_user/users/export/admins`,{responseType:"text"});
+
+     this.httpclient.get('http://localhost:8888/ms_gestion_user/users/export/admins', { responseType: 'blob' }).subscribe(
+      (data: Blob) => {
+        // Prompt the user to choose where to save the file
+        FileSaver.saveAs(data, 'clients.xlsx');
+      },
+      (error) => {
+        console.error('Failed to export data: ', error);
+      }
+    );
   }
 
 

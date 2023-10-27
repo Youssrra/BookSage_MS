@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Login } from '../request/login';
 import { UserService } from '../_services/user.service';
 import { UserAuthService } from '../_services/user-auth.service';
-import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-comp',
@@ -73,7 +73,7 @@ export class LoginCompComponent {
           //this.err = "Adress mail not found"
         } else {
           this.inSubmission = false
-          this.alertMsg = 'This account reached max Sessoin'
+          this.alertMsg = 'unable to connect try again later'
           this.alertColor = 'danger'
           // this.err = "This account reached max Sessoin"
         }

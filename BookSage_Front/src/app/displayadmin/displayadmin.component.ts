@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { UserService } from '../_services/user.service';
-import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-displayadmin',
@@ -20,11 +21,14 @@ export class DisplayadminComponent {
   message : string = "WAITING FOR DATA "; 
   successAlertVisible = false;
   errorAlertVisible = false;
+  exportsuccessAlertVisible = false;
+  exporterrorAlertVisible = false;
 
   constructor(
     private auth: UserService,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private httpclient: HttpClient
   ) {
     console.log('ROLE: ' + this.role); 
 
@@ -90,6 +94,35 @@ export class DisplayadminComponent {
     }
   }
 
+  export() {
+    if (confirm("Do you want to export user list  ?")) {
+
+      this.httpclient.get('http://localhost:8888/ms_gestion_user/users/export/admins', { responseType: 'blob' }).subscribe(
+        (data: Blob) => {
+        
+          FileSaver.saveAs(data, 'admins.xlsx');
+          console.log('Admin List exported successfully');
+          this.exporterrorAlertVisible = false;
+          this.exportsuccessAlertVisible = true;
+        },
+        (error) => {
+          console.error('Failed to export data: ', error);
+          console.error('Error while exporting admin list:', error);
+          console.log('Response body:', error?.error);
+          this.exportsuccessAlertVisible = false;
+          this.exporterrorAlertVisible = true;
+        }
+      );
+      
+      }
+  }
+
+  exportBooksToPdf() {
+    // Send an HTTP request to the backend API to generate and serve the PDF
+    
+  }
+
+
   closeSuccessAlert() {
     this.successAlertVisible = false;
     window.location.reload();
@@ -99,6 +132,18 @@ export class DisplayadminComponent {
   closeErrorAlert() {
     this.errorAlertVisible = false;
     window.location.reload();
+
+  }
+
+  exportcloseSuccessAlert() {
+    this.exportsuccessAlertVisible = false;
+    //window.location.reload();
+
+  }
+
+  exportcloseErrorAlert() {
+    this.exporterrorAlertVisible = false;
+    //window.location.reload();
 
   }
   

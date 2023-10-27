@@ -1,7 +1,13 @@
 package tn.esprit.ms_gestion_utilisateur.Controller;
 
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,6 +34,8 @@ import tn.esprit.ms_gestion_utilisateur.SecurityConfig.TokenService;
 import tn.esprit.ms_gestion_utilisateur.Services.UserDetailsImpl;
 import tn.esprit.ms_gestion_utilisateur.Services.UserService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
@@ -187,6 +195,17 @@ public class UserController {
             existingUser.setLastName(userRequest.getLastName());
         }
 
+        if (userRequest.getLastName() != null && !userRequest.getLastName().isEmpty()) {
+            existingUser.setLastName(userRequest.getLastName());
+        }
+
+        if (userRequest.getActive() != null) {
+            existingUser.setActive(userRequest.getActive());
+        }
+
+        existingUser.setActive(userRequest.getActive());
+
+
         return userRepository.save(existingUser);
     }
 
@@ -286,23 +305,90 @@ public class UserController {
 
 
     @GetMapping("/export/clients")
-    public String exportClientsToCsv() {
-        try {
-            userService.exportClientToCsv();
-            return "Data history exported to CSV file";
-        } catch (Exception e) {
-            return e.getMessage();
-        }
+    public ResponseEntity<byte[]> exportClientsToCsv() {
+        List<User> admins = userRepository.findUsersByRole(ERole.CLIENT);
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Clients");
+
+        // Create a header row
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {"ID", "USERNAME", "EMAIL", "PASSWORD", "FIRSTNAME", "LASTNAME", "ACTIVE"};
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
         }
 
+        // Fill in data
+        int rowNum = 1;
+        for (User user : admins) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(user.getId());
+            row.createCell(1).setCellValue(user.getUsername());
+            row.createCell(2).setCellValue(user.getEmail());
+            row.createCell(3).setCellValue(user.getPassword());
+            row.createCell(4).setCellValue(user.getFirstName());
+            row.createCell(5).setCellValue(user.getLastName());
+            row.createCell(6).setCellValue(user.getActive());
+        }
+
+        try {
+            ByteArrayOutputStream excelOutputStream = new ByteArrayOutputStream();
+            workbook.write(excelOutputStream);
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Content-Disposition", "attachment; filename=clients.xlsx");
+
+            return ResponseEntity.ok()
+                    .headers(responseHeaders)
+                    .body(excelOutputStream.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+        }
 
     @GetMapping("/export/admins")
-    public String exportAdminsToCsv() {
+    public ResponseEntity<byte[]> exportAdminsToCsv() {
+        List<User> admins = userRepository.findUsersByRole(ERole.ADMIN);
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Admins");
+
+        // Create a header row
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {"ID", "USERNAME", "EMAIL", "PASSWORD", "FIRSTNAME", "LASTNAME", "ACTIVE"};
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+        }
+
+        // Fill in data
+        int rowNum = 1;
+        for (User user : admins) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(user.getId());
+            row.createCell(1).setCellValue(user.getUsername());
+            row.createCell(2).setCellValue(user.getEmail());
+            row.createCell(3).setCellValue(user.getPassword());
+            row.createCell(4).setCellValue(user.getFirstName());
+            row.createCell(5).setCellValue(user.getLastName());
+            row.createCell(6).setCellValue(user.getActive());
+        }
+
         try {
-            userService.exportAdminToCsv();
-            return "Data history exported to CSV file";
-        } catch (Exception e) {
-            return e.getMessage();
+            ByteArrayOutputStream excelOutputStream = new ByteArrayOutputStream();
+            workbook.write(excelOutputStream);
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Content-Disposition", "attachment; filename=admins.xlsx");
+
+            return ResponseEntity.ok()
+                    .headers(responseHeaders)
+                    .body(excelOutputStream.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
         }
     }
 

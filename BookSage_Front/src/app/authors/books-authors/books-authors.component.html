@@ -24,7 +24,7 @@
                           <div class="card">
                             <div class="card-header">
                              
-                              <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+                              <button *ngIf="role.includes('ADMIN')" type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
                                 <i class="fa fa-plus"></i> Add
                               </button>
                             </div>
@@ -86,10 +86,10 @@
               </td>
               <td class="text-center">
                 <a routerLink="/books/update/{{ l.id }}" class="btn btn-success btn-sm">
-                  <i class="fa fa-info"></i> Detail
+                  <i class="fa fa-info" *ngIf="role.includes('ADMIN')"></i> Detail
                 </a>
                 <a (click)="delete(l.id)" class="btn btn-danger btn-sm">
-                  <i class="fas fa-trash"></i> Delete
+                  <i class="fas fa-trash" *ngIf="role.includes('ADMIN')"></i> Delete
                 </a>
               </td>
             </tr>

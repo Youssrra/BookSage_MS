@@ -62,9 +62,9 @@ public class UserService {
         }
         existingUser.setLastName(userRequest.getLastName());
 
-        if (userRequest.getActive() == null ) {
-            userRequest.setActive(existingUser.getActive());
-        }
+
+        //userRequest.setActive(existingUser.getActive());
+
         existingUser.setActive(userRequest.getActive());
 
 
@@ -91,7 +91,7 @@ public class UserService {
 
         String userHomeDir = System.getProperty("user.home");
         String downloadsDir = userHomeDir + File.separator + "Downloads";
-        String excelFilePath = downloadsDir + File.separator + "clients.xlsx";
+        String excelFilePath = "/app/downloads/clients.xlsx";
 
 
         // Create a new Excel workbook
@@ -132,8 +132,7 @@ public class UserService {
 
         String userHomeDir = System.getProperty("user.home");
         String downloadsDir = userHomeDir + File.separator + "Downloads";
-        String excelFilePath = downloadsDir + File.separator + "admins.xlsx";
-
+        String excelFilePath = downloadsDir + File.separator + "/app/downloads/admins.xlsx";
 
         // Create a new Excel workbook
         try (Workbook workbook = new XSSFWorkbook()) {

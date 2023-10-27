@@ -47,17 +47,19 @@ services:
     depends_on:
       - eureka-server
 
-  ms-emprunt:
-    container_name: ms-emprunt-container
-    ports:
-      - "8280:8280"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/empruntes?autoReconnect=true&useSSL=false
-    image: ms-emprunt-image
-    restart: unless-stopped
-    depends_on:
-      - eureka-server
-      - db-mysql
+#  ms-emprunt:
+#    container_name: ms-emprunt-container
+#    ports:
+#      - "8280:8280"
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/empruntes\?createDatabaseIfNotExist=true\&useUnicode=true\&useJDBCCompliantTimezoneShift=true\&useLegacyDatetimeCode=false&serverTimezone=UTC
+#      - SPRING_DATASOURCE_USERNAME =root
+#      - SPRING_DATASOURCE_PASSWORD =root
+#    image: ms-emprunt-image
+#    restart: unless-stopped
+#    depends_on:
+#      - eureka-server
+#      - db-mysql
 
   ms-auteur:
     image: ms-auteur-image
@@ -81,15 +83,14 @@ services:
     depends_on:
       - eureka-server
 
-  db-mysql:
-    image: "mysql:5.6"
-    container_name: db-mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=empruntes
-    ports:
-      - "3307:330"
-    restart: unless-stopped
+#  db-mysql:
+#    image: "mysql:5.6"
+#    container_name: db-mysql
+#    environment:
+#      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+#    ports:
+#      - "3307:3306"
+#    restart: unless-stopped
 
 networks:
   my-network:

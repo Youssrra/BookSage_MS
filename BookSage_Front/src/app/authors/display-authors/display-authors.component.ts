@@ -35,7 +35,8 @@ export class DisplayAuthorsComponent {
     
 
 
-  }
+  }  role = this.cookieService.get("Role");
+
   
   filterAuthors() {
     this.filteredAuthors = this.liste.filter((client) => {

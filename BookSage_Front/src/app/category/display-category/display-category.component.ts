@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { BooksService } from 'src/app/_services/books.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class DisplayCategoryComponent {
   message: string = "WAITING FOR DATA ";
 
 
-  constructor(private router: Router, private bookService : BooksService) {
+  constructor(private router: Router, private bookService : BooksService, private cookieService: CookieService) {
     
       this.bookService.listeallCategorys().subscribe((data: any) => {
         data.forEach((element: any) => {
@@ -39,6 +40,8 @@ export class DisplayCategoryComponent {
 
 
   }
+  role = this.cookieService.get("Role");
+
   
   filterCategorys() {
     this.filteredCategorys = this.liste.filter((category) => {

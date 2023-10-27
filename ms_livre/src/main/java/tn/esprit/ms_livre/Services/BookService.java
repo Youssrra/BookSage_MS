@@ -62,7 +62,7 @@ public class BookService {
 
         String userHomeDir = System.getProperty("user.home");
         String downloadsDir = userHomeDir + File.separator + "Downloads";
-        String pdfFilePath = downloadsDir + File.separator + "BookList.pdf";
+        String pdfFilePath = "/app/downloads/BookList.pdf";
 
         PDDocument document = new PDDocument();
 
@@ -116,4 +116,9 @@ public class BookService {
 
         contentStream.endText();
     }
+
+    public List<Book> getAllAuthorsBook(Long id) {
+        return bookRepository.findBookByAuthor(id);
+    }
+
 }

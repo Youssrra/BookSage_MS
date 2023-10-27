@@ -26,6 +26,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Integer countAllByCategory_Id(Long id) ;
 
+    List<Book> findBookByAuthor(Long id);
+
 
 
 }
