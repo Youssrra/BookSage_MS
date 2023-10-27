@@ -57,6 +57,7 @@ Le projet est organisé en plusieurs répertoires, chacun correspondant à un mi
 - `ms-livre/` : Contient le code source du microservice de gestion des livres.
 - `ms-review/` : Contient le code source du microservice de gestion des avis (reviews).
 - `GEmpruntes/` : Contient le code source du microservice de gestion des emprunts des livre.
+- `ms_auteur/` : Contient le code source du microservice de gestion des auteur.
 - `EurekaDiscoveryServer/` : Contient le code source du serveur de découverte Eureka.
 - `Gateway/` : Contient le code source de la partie gateway.
 - `BookSage_Front/` : Contient le code source de la partie front-end développée en Angular.
