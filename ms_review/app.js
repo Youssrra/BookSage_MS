@@ -42,7 +42,7 @@ app.use(function (err, req, res, next) {
 });
 
 // Database connection
-mongoose.connect('mongodb+srv://yousra:yousra@cluster0.nxwu1do.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://...', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
